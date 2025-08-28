@@ -177,7 +177,7 @@ function BuyerHeader() {
                             {/* 로그인 버튼 */}
                             <Link
                                 to="/auth/signin"
-                                className=" text-sm text-center px-3 py-2 hover:underline transition"
+                                className="w-[90px] text-sm text-center bg-teal-400 px-3 py-2 rounded-lg hover:bg-teal-500 transition font-bold"
                             >
                                 로그인
                             </Link>
@@ -185,7 +185,7 @@ function BuyerHeader() {
                             {/* 회원가입 - 데스크탑 */}
                             <Link
                                 to="/auth/signup"
-                                className="text-sm text-center hover:underline transition hidden md:inline"
+                                className="w-[90px] text-sm text-center bg-rose-100 text-gray-700 px-3 py-2 rounded-lg hover:bg-rose-200 transition font-bold hidden md:inline"
                             >
                                 회원가입
                             </Link>

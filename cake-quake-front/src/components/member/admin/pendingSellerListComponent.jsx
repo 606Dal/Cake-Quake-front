@@ -20,21 +20,22 @@ const PendingSellerListComponent = ({
     handleSearch,
     selectedType,
     searchKeyword,
+    formatDateTime,
 }) => {
 
-    const [openRowId, setOpenRowId] = useState(null);
-    const [formError, setFormError] = useState(null);
-    const [showError, setShowError] = useState(false);
+    const [openRowId, setOpenRowId] = useState(null)
+    const [formError, setFormError] = useState(null)
+    const [showError, setShowError] = useState(false)
 
     useEffect(() => {
         if (showError) {
-            const timer = setTimeout(() => setShowError(false), 3000);
-            return () => clearTimeout(timer);
+            const timer = setTimeout(() => setShowError(false), 3000)
+            return () => clearTimeout(timer)
         }
-    }, [showError]);
+    }, [showError])
 
     const toggleRow = (id) => {
-        setOpenRowId((prev) => (prev === id ? null : id));
+        setOpenRowId((prev) => (prev === id ? null : id))
     }
 
     return (
@@ -114,7 +115,7 @@ const PendingSellerListComponent = ({
                     onClick={handleSearch}
                     className="flex-shrink-0 px-6 py-1 text-lg font-bold text-white bg-teal-500 rounded-lg shadow-sm hover:bg-teal-600"
                 >
-                    Pind
+                    Find
                 </button>
             </div>
             {/* 검색 창 끝 */}
@@ -141,8 +142,8 @@ const PendingSellerListComponent = ({
                             const isLast = index === filteredData.length - 1; // 마지막 요소 확인
 
                             return (
-                                <>
-                                    <tr key={pending.tempSellerId}
+                                <React.Fragment key={pending.tempSellerId}>
+                                    <tr
                                         className="border-t text-xs md:text-sm"
                                         ref={isLast ? observerTargetRef : null}  // 자동으로 다음 페이지 로딩  
                                         onClick={() => toggleRow(pending.tempSellerId)}
@@ -263,15 +264,15 @@ const PendingSellerListComponent = ({
                                                     <p><strong>매장 설명:</strong> {pending.mainProductDescription}</p>
                                                     <p><strong>운영 시간:</strong> {pending.openTime} ~ {pending.closeTime}</p>
                                                     <p><strong>오픈일:</strong> {pending.openingDate}</p>
-                                                    <p><strong>등록일:</strong> {pending.regDate}</p>
-                                                    <p><strong>수정일:</strong> {pending.modDate}</p>
+                                                    <p><strong>등록일:</strong> {formatDateTime(pending.regDate)}</p>
+                                                    <p><strong>수정일:</strong> {formatDateTime(pending.modDate)}</p>
                                                     <p><strong>공개 여부:</strong> {pending.publicInfo ? "공개" : "비공개"}</p>
                                                     <p><strong>가입 방식:</strong> {pending.socialType}</p>
                                                 </div>
                                             </td>
                                         </tr>
                                     )}
-                                </>   
+                                </React.Fragment>
                             );
                         })}
 

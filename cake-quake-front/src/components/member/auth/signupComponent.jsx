@@ -3,7 +3,7 @@ import cakeImage from "../../../assets/signup_lettering_cake.jpg";
 
 const SignupComponent = () => {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-white px-4">
+        <div className="flex items-center justify-center bg-white px-4 mt-20">
             <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-2xl flex flex-col items-center">
                 <div className="flex flex-col md:flex-row items-center w-full mb-6">
                     {/* 이미지 */}
@@ -27,13 +27,13 @@ const SignupComponent = () => {
                 <div className="w-full flex flex-col md:flex-row gap-4">
                     <Link
                         to="/auth/signup/buyer"
-                        className="w-full text-center bg-rose-50 text-gray-700 py-2 rounded-lg hover:bg-rose-200 transition font-bold"
+                        className="w-full text-center bg-rose-100 text-gray-700 py-2 rounded-lg hover:bg-rose-200 transition font-bold"
                     >
                         일반 회원 가입
                     </Link>
                     <Link
                         to="/auth/signup/seller-step1"
-                        className="w-full text-center bg-rose-50 text-gray-700 py-2 rounded-lg hover:bg-rose-200 transition font-bold"
+                        className="w-full text-center bg-rose-100 text-gray-700 py-2 rounded-lg hover:bg-rose-200 transition font-bold"
                     >
                         판매자 회원 가입
                     </Link>

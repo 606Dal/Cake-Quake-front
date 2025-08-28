@@ -11,7 +11,7 @@ const jwtAxios = axios.create({
 })
 const baseUrl = import.meta.env.VITE_API_BASE_URL
 
-// //요청 보내기 전에 추가 작업
+// //요청 보내기 전에 추가 작업(변경 전)
 // const beforeReq = (config) => {
 //     console.log("---------요청 전 작업---------")
 
@@ -25,19 +25,19 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
 //     config.headers.Authorization = `Bearer ${accessToken}`
 //     return config
 // }
-    // 요청 인터셉터
+    // 요청 보내기 전 추가 작업
     const beforeReq = (config) => {
         console.log("요청 전 작업 (HttpOnly 쿠키 기반)")
         return config
     }
 
-// // 요청 실패 처리
+// // 요청 실패 처리(변경 전)
 // const requestFail = (err) => {
 //     console.log("---------요청 오류---------")
 
 //     return Promise.reject(err)
 // }
-    // 요청 실패
+    // 요청 실패 처리
     const requestFail = (err) => {
         console.error("요청 오류:", err)
         return Promise.reject(err)
@@ -51,7 +51,7 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
     }
 
 
-// // 응답 실패 시 추가 작업
+// // 응답 실패 시 추가 작업(변경 전)
 // const responseFail = async (err) => {
 //     console.log("---------응답 실패 오류---------")
 //     console.log(err)
@@ -79,6 +79,8 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
 
 //     return Promise.reject(err)
 // }
+
+    // 응답 실패 시 추가 작업
     const responseFail = async (err) => {
         console.log("---------응답 실패 오류---------")
         console.log(err)
@@ -97,6 +99,7 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
                         withCredentials: true
                     })
                     // console.log("리프레시토큰 요청 후: ", res)
+                    return true
 
                 } catch (refreshError) {
                     console.log("Token refresh failed", refreshError)
@@ -117,7 +120,7 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
                         if (!allowedPaths.includes(location.pathname)) {
                             window.location.replace("/auth/signin")
                         }
-                        return;
+                        return false
                     }// end if
                 } // try~catch
             }// end if
@@ -127,7 +130,7 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
         return Promise.reject(err)
     };
 
-// // 토큰 갱신 함수
+// // 토큰 갱신 함수(변경 전)
 // async function refreshTokens(originalConfig) {
 //     console.log("---토큰 재발급 요청 시작")
 

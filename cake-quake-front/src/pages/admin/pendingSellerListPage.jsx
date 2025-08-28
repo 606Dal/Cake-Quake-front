@@ -215,6 +215,12 @@ const PendingSellerListPage = () => {
         setShowModal(false)
     }
 
+    // regDate, modDate 포맷
+    const formatDateTime = (isoStr) => {
+        const date = new Date(isoStr)
+        return `${date.toLocaleDateString()} ${date.toTimeString().slice(0, 8)}`
+    }
+
     return (
         <div>
             {isFetching && <LoadingSpinner />} {/* 로딩 스피너 */}
@@ -237,6 +243,7 @@ const PendingSellerListPage = () => {
                     handleSearch={handleSearch}
                     selectedType={selectedType}
                     searchKeyword={searchKeyword}
+                    formatDateTime={formatDateTime}
                 />
             )}
             <ResultModal show={showModal} closeResultModal={closeResultModal} msg={modalMsg} />

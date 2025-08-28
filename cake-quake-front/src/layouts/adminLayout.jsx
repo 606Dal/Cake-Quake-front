@@ -63,9 +63,9 @@ export default function AdminLayout() {
                         <nav className="flex flex-col space-y-1" style={{ width: '16rem' }}>
                             <div className="text-sm font-semibold text-gray-500 mb-2">매장 승인/거부</div>
                             <Link
-                                to={`/admin/sellers/pending?page=${page}&size=${size}`}
+                                to={`/admin?page=${page}&size=${size}`}
                                 className={`flex items-center justify-between px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100 ${
-                                    isActive("/admin/sellers/pending") ? "bg-blue-50 text-blue-700 font-medium" : ""
+                                    isActive("/admin") ? "bg-blue-100 text-blue-700 font-medium" : ""
                                 }`}
                             >
                                 <span>승인 관리</span>

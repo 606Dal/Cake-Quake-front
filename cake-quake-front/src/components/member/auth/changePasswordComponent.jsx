@@ -11,7 +11,7 @@ const ChangePasswordComponent = ({
     const { currentPassword, newPassword, verifyPassword } = form
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="flex items-center justify-center bg-white">
             <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">비밀번호 변경</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">

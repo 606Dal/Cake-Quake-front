@@ -13,7 +13,7 @@ const SigninComponent = ({
 }) => {
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-white px-4">
+        <div className="flex items-center justify-center bg-white px-4">
             <div className="bg-white p-10 rounded-xl shadow-xl w-full max-w-md">
                 <h2 className="text-3xl font-heading font-bold text-primary-color text-center">
                     Cake Quake
@@ -26,9 +26,7 @@ const SigninComponent = ({
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* 아이디 */}
                     <div>
-                        <label htmlFor="userId" className="block text-sm font-medium text-gray-600 mb-1 mt-6">
-                            ID
-                        </label>
+                        <label htmlFor="userId" className="block text-sm font-medium text-gray-600 mb-1 mt-6"></label>
                         <input
                             id="userId"
                             type="text"
@@ -42,9 +40,7 @@ const SigninComponent = ({
 
                     {/* 비밀번호 */}
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-1">
-                            Password
-                        </label>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-1"></label>
                         <input
                             id="password"
                             type="password"
@@ -67,7 +63,7 @@ const SigninComponent = ({
                     <div className="space-y-3 pt-2">
                         <button
                             type="submit"
-                            className="w-full bg-teal-400 text-white py-3 rounded-lg hover:bg-teal-500 transition font-semibold text-base"
+                            className="w-full bg-teal-400 py-3 rounded-lg hover:bg-teal-500 transition font-semibold text-base"
                         >
                             로그인
                         </button>
