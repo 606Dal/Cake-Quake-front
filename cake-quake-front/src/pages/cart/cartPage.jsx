@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import useCart from '../../hooks/useCart';
-import CartList from '../../components/cart/CartList';
-import CartPrice from '../../components/cart/CartPrice';
+import CartList from '../../components/cart/cartList';
+import CartPrice from '../../components/cart/cartPrice';
 import CartActions from "../../components/cart/cartActions.jsx";
-import DeleteModal from '../../components/cart/DeleteModal';
-import SelectDeleteModal from '../../components/cart/SelectDeleteModal';
+import DeleteModal from '../../components/cart/deleteModal';
+import SelectDeleteModal from '../../components/cart/selectDeleteModal';
 import AlertModal from "../../components/common/AlertModal.jsx";
 
 const SuccessMessageModal = ({ message, onClose }) => { // onConfirm 대신 onClose로 변경
