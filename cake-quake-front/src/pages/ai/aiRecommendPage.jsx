@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import AiForm from "../../components/ai/aiForm";
 import AiResultBox from "../../components/ai/aiResultBox";
-import ChatSidebar from "../../components/ai/ChatSidebar";
+import ChatSidebar from "../../components/ai/chatSidebar";
 import { Menu } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import { useAuth } from "../../store/AuthContext";
