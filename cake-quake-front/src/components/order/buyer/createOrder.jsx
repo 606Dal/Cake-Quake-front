@@ -1,6 +1,6 @@
 // src/components/order/buyer/createOrder.jsx
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { createOrder } from "../../../api/buyerOrderApi";
 import useCart from '../../../hooks/useCart';
@@ -8,8 +8,8 @@ import { useAuth } from '../../../store/AuthContext';
 import { getPointBalance } from '../../../api/pointApi';
 
 // 새로 분리한 컴포넌트 임포트
-import OrderPickupScheduler from './createorderdetails/OrderPickupScheduler';
-import OrderItemsDisplay from './createorderdetails/OrderItemsDisplay';
+import OrderPickupScheduler from './createorderdetails/orderPickupScheduler';
+import OrderItemsDisplay from './createorderdetails/orderItemsDisplay';
 import OrderPaymentSummary from './createorderdetails/OrderPaymentSummary';
 
 // getItemDetails 유틸리티 함수 임포트
