@@ -5,7 +5,7 @@ import { getShopCakes } from "../../api/shopApi.jsx";
 import CakeCard from "../../components/cake/itemComponents/cakeCard.jsx";
 import CakeOptionList from "../../components/cake/optionComponents/optionListComponent.jsx";
 import SellerShopDetail from "../../components/shop/sellerShopDetail.jsx";
-import LoadingSpinner from "../../components/common/LoadingSpinner.jsx";
+import LoadingSpinner from "../../components/common/loadingSpinner.jsx";
 import { useAuth } from "../../store/AuthContext.jsx";
 
 // 카테고리 목록
