@@ -3,14 +3,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router';
 import { getSellerOrderSales,  } from '../../../../api/sellerOrderApi';
 
-import DateRangeSelector from '../../../../components/order/seller/sales/DateRangeSelector';
-import SalesSummaryOverview from '../../../../components/order/seller/sales/SalesSummaryOverview';
-import MonthlySalesChart from '../../../../components/order/seller/sales/MonthSalesChart.jsx';
+
+import SalesSummaryOverview from '../../../../components/order/seller/sales/salesSummaryOverview.jsx';
+import MonthlySalesChart from '../../../../components/order/seller/sales/monthSalesChart.jsx';
 import ProductSalesTable from '../../../../components/order/seller/sales/ProductSalesTable';
-import ProductRankingCards from '../../../../components/order/seller/sales/ProductRankingCards';
+import ProductRankingCards from '../../../../components/order/seller/sales/productRankingCards.jsx';
 
 import { getSellerStatisticsPdfUrl } from '../../../../api/sellerOrderApi';
 import AlertModal from "../../../../components/common/AlertModal.jsx";
+import DateRangeSelector from '../../../../components/order/seller/sales/dateRangeSelector.jsx';
 
 function TotalSalesPage() {
     const { shopId } = useParams();
