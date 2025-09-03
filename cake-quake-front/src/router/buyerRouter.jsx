@@ -21,11 +21,10 @@ const ReviewEditPage = lazy(()=> import("../pages/buyer/review/reviewEditPage.js
 const PaymentListPage = lazy(()=>import('../pages/payment/PaymentListPage.jsx'));
 const PaymentDetailPage = lazy(()=>import('../pages/payment/paymentDetailPage.jsx'));
 // 결제 시작 & 콜백 페이지
-const PaymentStartPage      = lazy(() => import('../pages/payment/PaymentStartPage.jsx'));
-const KakaoApprovePage      = lazy(() => import('../pages/payment/KakaoApprovePage.jsx'));
+const PaymentStartPage      = lazy(() => import('../pages/payment/paymentStartPage.jsx'));
+const KakaoApprovePage      = lazy(() => import('../pages/payment/kakaoApprovePage.jsx'));
 const TossSuccessPage       = lazy(() => import('../pages/payment/TossSuccessPage.jsx'));
-const TossFailPage          = lazy(() => import('../pages/payment/TossFailPage.jsx'));
-
+const TossFailPage          = lazy(() => import('../pages/payment/tossFailPage.jsx'));
 
 //---------------------마이페이지
 const BuyerProfilePage = lazy(() => import("../pages/buyer/profile/buyerProfilePage.jsx"));
