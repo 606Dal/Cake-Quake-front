@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
 import { getAllRequests, getRequestByStatus } from '../../api/procurementApi.jsx';
-import { AdminProcurementList }              from '../../components/procurement/AdminProcurementList.jsx';
+import { AdminProcurementList }              from '../../components/procurement/adminProcurementList.jsx';
 
 const STATUS_OPTIONS = [
     { value: 'REQUESTED',  label: '요청됨'   },
