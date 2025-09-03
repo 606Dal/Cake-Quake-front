@@ -10,7 +10,7 @@ import {
     deleteOptionItem
 } from '../../../api/cakeApi';
 
-import OptionDetail from '../../../components/cake/optionComponents/optionDetailComponent';
+import OptionDetail from '../../../components/cake/optionComponents/optiondetailComponent';
 import { useAuth } from "../../../store/AuthContext.jsx";
 import AlertModal from "../../../components/common/AlertModal";
 import OKModal from "../../../components/common/OKModal.jsx";
