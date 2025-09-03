@@ -20,7 +20,7 @@ const SellerOrderDetailPage = lazy(() => import("../pages/order/seller/sellerOrd
 //QnA
 const QnAListPage = lazy(() => import("../pages/qna/qnaListPage"));
 const QnADetailPage = lazy(()=> import("../pages/qna/qnaDetailPage"));
-const QnAFormPage = lazy (() => import("../pages/qna/QnAFormPage"));
+const QnAFormPage = lazy (() => import("../pages/qna/qnaFormPage"));
 
 const Loading = <div>Loading...</div>; // 로딩 스피너 등 실제 컴포넌트로 대체 가능
 

@@ -1,7 +1,7 @@
 import jwtAxios from '../../../../utils/jwtUtil';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router';
-import { getSellerOrderSales } from '../../../../api/sellerorderApi';
+import { getSellerOrderSales,  } from '../../../../api/sellerOrderApi';
 
 import DateRangeSelector from '../../../../components/order/seller/sales/DateRangeSelector';
 import SalesSummaryOverview from '../../../../components/order/seller/sales/SalesSummaryOverview';
@@ -9,7 +9,7 @@ import MonthlySalesChart from '../../../../components/order/seller/sales/MonthSa
 import ProductSalesTable from '../../../../components/order/seller/sales/ProductSalesTable';
 import ProductRankingCards from '../../../../components/order/seller/sales/ProductRankingCards';
 
-import { getSellerStatisticsPdfUrl } from '../../../../api/sellerorderApi';
+import { getSellerStatisticsPdfUrl } from '../../../../api/sellerOrderApi';
 import AlertModal from "../../../../components/common/AlertModal.jsx";
 
 function TotalSalesPage() {
