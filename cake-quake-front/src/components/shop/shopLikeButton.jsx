@@ -2,7 +2,7 @@ import React from 'react';
 import { Heart } from 'lucide-react';
 import { useQuery} from '@tanstack/react-query'; // useQuery, useQueryClient 임포트
 import { useAuth } from '../../store/AuthContext';
-import LikeButton from '../common/LikeButton'; // LikeButton 임포트
+import LikeButton from '../common/likeButton'; // LikeButton 임포트
 import { getShopLikeStatus } from '../../api/likeApi'; // getShopLikeStatus 임포트
 
 /**

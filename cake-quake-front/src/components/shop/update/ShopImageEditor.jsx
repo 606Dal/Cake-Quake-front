@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import { Upload } from 'lucide-react';
-import ConfirmationModal from '../ConfirmationModal.jsx'; // 확인 모달 컴포넌트 임포트
+import ConfirmationModal from '../confirmationModal.jsx'; // 확인 모달 컴포넌트 임포트
 
 const BASE_URL = import.meta.env.VITE_S3_BASE_URL;
 
