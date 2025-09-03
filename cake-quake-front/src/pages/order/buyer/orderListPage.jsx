@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getOrderList } from '../../../api/buyerOrderApi';
-import OrderListItem from '../../../components/order/buyer/OrderListItem';
+import OrderListItem from '../../../components/order/buyer/orderListItem';
 
 export default function OrderListPage() {
     const [orders, setOrders] = useState([]);
