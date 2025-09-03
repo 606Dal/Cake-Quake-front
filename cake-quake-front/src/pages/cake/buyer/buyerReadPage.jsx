@@ -9,7 +9,7 @@ import { getCakeReviews } from "../../../api/reviewApi.jsx";
 import { getShopDetail } from "../../../api/shopApi.jsx";
 import BestReviewsCarousel from "../../../components/review/ReviewCarouserl.jsx";
 // ⭐ LikeButton 컴포넌트 임포트 확인 ⭐
-import LikeButton from "../../../components/common/LikeButton.jsx";
+import LikeButton from "../../../components/common/likeButton.jsx";
 import {Heart} from "lucide-react"; // Heart 아이콘도 필요하므로 임포트
 import AlertModal from "../../../components/common/AlertModal";
 
