@@ -1,8 +1,9 @@
 // layouts/BasicLayout.jsx
 
-import Footer from "../components/common/Footer";
+
 import { Outlet } from "react-router";
 import BuyerHeader from "../components/common/buyerHeader.jsx";
+import Footer from "../components/common/footer.jsx";
 
 function BasicLayout() {
     return (
