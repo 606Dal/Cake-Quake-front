@@ -1,10 +1,7 @@
 // src/router/buyerRouter.jsx
 import { lazy, Suspense } from 'react';
-import CartLayout from '../layouts/CartLayout.jsx';
-import AdminLayout from "../layouts/adminLayout.jsx";
-import BasicLayout from "../layouts/basicLayout.jsx";
+import CartLayout from '../layouts/cartLayout.jsx';
 import OrderDetailPage from "../pages/order/buyer/orderDetailPage.jsx";
-import AiRecommendPage from "../pages/ai/aiRecommendPage.jsx";
 
 
 
@@ -60,7 +57,7 @@ const LikedMainPage = lazy(() => import("../pages/buyer/like/LikedMainPage.jsx")
 //QnA
 const QnAListPage = lazy(() => import("../pages/qna/qnaListPage"));
 const QnADetailPage = lazy(()=> import("../pages/qna/qnaDetailPage"));
-const QnAFormPage = lazy (() => import("../pages/qna/QnAFormPage"));
+const QnAFormPage = lazy (() => import("../pages/qna/qnaFormPage"));
 
 //채팅
 const ChattingPage = lazy (() => import("../pages/buyer/shop/buyerChatPage.jsx"));
