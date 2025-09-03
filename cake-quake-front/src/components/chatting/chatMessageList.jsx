@@ -1,4 +1,4 @@
-import ChatMessage from "./ChatMessage.jsx";
+import ChatMessage from "./chatMessage.jsx";
 
 const ChatMessageList = ({ messages, myUserId }) => (
     <>
