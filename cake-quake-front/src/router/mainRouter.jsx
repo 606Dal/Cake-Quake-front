@@ -1,4 +1,4 @@
-import BasicLayout from "../layouts/BasicLayout";
+import BasicLayout from "../layouts/basicLayout.jsx";
 import MainPage from "../pages/mainPage";
 import {createBrowserRouter} from "react-router";
 import {Suspense} from "react";
