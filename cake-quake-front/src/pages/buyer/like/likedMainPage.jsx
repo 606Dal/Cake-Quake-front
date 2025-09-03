@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router';
-import LikedItemsPage from './LikedItemsPage';
-import LikedShopsPage from './LikedShopsPage'; 
+import LikedItemsPage from './likedItemsPage';
+import LikedShopsPage from './likedShopsPage'; 
 
 const LikedMainPage = () => {
     // URL 파라미터에서 'type'을 가져옵니다. (cake 또는 shop)
