@@ -3,7 +3,7 @@ import SignupKakaoUserComponent from "../../../components/member/auth/signupKaka
 import useKakaoSignupStore from "../../../store/useKakaoSignupStore";
 import { useNavigate } from "react-router";
 import { getSigninUserInfo, singupKakao } from "../../../api/authApi";
-import VerifyModal from "../../../components/member/modal/VerifyModal";
+import VerifyModal from "../../../components/member/modal/verifyModal";
 import ResultModal from "../../../components/common/resultModal";
 import { useAuth } from "../../../store/AuthContext";
 
@@ -16,7 +16,7 @@ const SignupKakaoUserPage = () => {
         }, [])
 
     // 스토어에 저장된 정보 가져오기 = 카카오 유저 정보
-    const { kakaoInfo, reset } = useKakaoSignupStore() // 이거 어디서 쓰지
+    const { kakaoInfo, reset } = useKakaoSignupStore()
     // console.log(kakaoInfo.email, kakaoInfo.nickname)
     
     const { setUser } = useAuth()

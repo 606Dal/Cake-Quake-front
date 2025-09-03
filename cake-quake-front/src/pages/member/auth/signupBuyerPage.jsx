@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import ResultModal from "../../../components/common/resultModal";
 import SignupBuyerComponent from "../../../components/member/auth/signupBuyerComponent";
 import { createBuyerSignupDTO } from "../../../dto/member/member.dto";
-import VerifyModal from "../../../components/member/modal/VerifyModal";
+import VerifyModal from "../../../components/member/modal/verifyModal";
 import { singup } from "../../../api/authApi";
 
 const SignupBuyerPage = () => {

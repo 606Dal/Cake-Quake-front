@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import ResultModal from "../../../components/common/resultModal";
-import VerifyModal from "../../../components/member/modal/VerifyModal";
+import VerifyModal from "../../../components/member/modal/verifyModal";
 import SellerSignupStep1Component from "../../../components/member/auth/signupSellerStep1Component";
 import { verifyBusiness, postSellerSignupStep1 } from "../../../api/authApi";
 
