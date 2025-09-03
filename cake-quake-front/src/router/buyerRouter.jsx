@@ -4,10 +4,9 @@ import CartLayout from '../layouts/cartLayout.jsx';
 import OrderDetailPage from "../pages/order/buyer/orderDetailPage.jsx";
 
 
-
 const CakeIndex = lazy(() => import("../pages/cake/buyer/indexPage.jsx"));
 const BuyerCakeRead = lazy(() => import("../pages/cake/buyer/buyerReadPage.jsx"));
-const CartPage = lazy(() => import('../pages/cart/CartPage.jsx'));
+const CartPage = lazy(() => import('../pages/cart/cartPage.jsx'));
 const OrderListPage = lazy(() => import('../pages/order/buyer/orderListPage.jsx'));
 //const OrderDetailPage = lazy(() => import('../pages/order/buyer/orderDetailPage.jsx'));
 const CreateOrderPage = lazy(() => import('../pages/order/buyer/createOrderPage.jsx'));
@@ -34,11 +33,14 @@ const BuyerProfilePage = lazy(() => import("../pages/buyer/profile/buyerProfileP
 const TemperaturePage = lazy(() => import("../pages/buyer/temperature/temperaturePage.jsx"));
 //포인트
 const PointPage = lazy(() => import("../pages/buyer/point/pointPage.jsx"));
+
+// 회원 상세 정보
 const BuyerProfileDetailsPage = lazy(() => import("../pages/member/buyer/buyerProfileDetailsPage.jsx"));
 const BuyerProfileDetailsModifyPage = lazy(() => import("../pages/member/buyer/buyerProfileDetailsModifyPage.jsx"));
 const BuyerProfileDetailsModifyAlarmPage = lazy(() => import("../pages/member/buyer/buyerProfileDetailsAlarmPage.jsx"));
+
 //뱃지
-const BadgePage = lazy(() => import("../pages/buyer/badge/BadgePage.jsx"));
+const BadgePage = lazy(() => import("../pages/buyer/badge/badgePage.jsx"));
 
 //---------------------AI
 const AIRecommendPage = lazy(() => import("../pages/ai/aiRecommendPage.jsx"));
@@ -48,11 +50,8 @@ const BuyerNoticeListPage=lazy(()=>import("../pages/buyer/shop/buyerNoticeListPa
 const BuyerNoticeDetailPage = lazy(()=>import("../pages/buyer/shop/buyerNoticeDetailPage.jsx"));
 const BuyerShopDetailPage=lazy(()=>import("../pages/buyer/shop/buyerShopDetailPage.jsx"));
 
-
 //-------------------찜
-const LikedMainPage = lazy(() => import("../pages/buyer/like/LikedMainPage.jsx"));
-
-
+const LikedMainPage = lazy(() => import("../pages/buyer/like/likedMainPage.jsx"));
 
 //QnA
 const QnAListPage = lazy(() => import("../pages/qna/qnaListPage"));
