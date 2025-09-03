@@ -1,9 +1,9 @@
 // src/pages/point/PointPage.jsx
 import React, { useState, useEffect } from "react";
 import { getPointBalance, getPointHistory } from "../../../api/pointApi.jsx";
-import PointSummary from "../../../components/point/PointSummary.jsx";
-import FilterTabs   from "../../../components/point/FilterTabs.jsx";
-import HistoryList  from "../../../components/point/PointHistory.jsx";
+import PointSummary from "../../../components/point/pointSummary.jsx";
+import FilterTabs   from "../../../components/point/filterTabs.jsx";
+import HistoryList  from "../../../components/point/pointHistory.jsx";
 
 export default function PointPage() {
     const PAGE_SIZE = 10;

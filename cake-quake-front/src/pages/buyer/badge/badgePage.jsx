@@ -4,7 +4,7 @@ import {
     getAllBadgesWithAcquisitionStatus,
     setProfileBadge,
 } from "../../../api/badgeApi";
-import BadgeCard from "../../../components/badge/BadgeCard";
+import BadgeCard from "../../../components/badge/badgeCard";
 import { useAuth } from "../../../store/AuthContext.jsx";
 import AlertModal from "../../../components/common/AlertModal.jsx";
 
