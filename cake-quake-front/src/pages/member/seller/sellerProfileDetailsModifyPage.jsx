@@ -6,7 +6,7 @@ import { getSellerProfile, modifySellerProfile } from "../../../api/memberApi";
 import { useAuth } from "../../../store/AuthContext";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../../../components/common/loadingSpinner";
-import VerifyModal from "../../../components/member/modal/VerifyModal";
+import VerifyModal from "../../../components/member/modal/verifyModal";
 import ResultModal from "../../../components/common/resultModal";
 
 
