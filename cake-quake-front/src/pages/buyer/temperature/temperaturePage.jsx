@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {getTemperature, getTemperatureHistory} from "../../../api/temperatureApi.jsx";
-import FilterTabs from "../../../components/temperature/filterTabs.jsx";
+import FilterTabs from "../../../components/temperature/FilterTabs.jsx";
 import HistoryList from "../../../components/temperature/temperatureHistory.jsx";
 import {getBuyerProfile} from "../../../api/memberApi.js";
 
