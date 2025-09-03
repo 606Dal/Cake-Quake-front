@@ -1,5 +1,5 @@
 import React from "react";
-import SellerOrderItem from "./SellerOrderItem";
+import SellerOrderItem from "./sellerOrderItem";
 
 
 const SellerOrderList = ({ orders }) => {
