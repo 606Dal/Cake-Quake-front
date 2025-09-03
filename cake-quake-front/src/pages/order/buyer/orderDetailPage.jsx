@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'; // ⭐ useQuery, useMutation, useQueryClient 임포트 ⭐
 import { getOrderDetail, cancelMyOrder } from '../../../api/buyerOrderApi';
-import OrderDetailComponent from '../../../components/order/buyer/OrderDetail';
+import OrderDetailComponent from '../../../components/order/buyer/orderDetail';
 import {getOrderPayments} from "../../../api/paymentApi.jsx";
 import AlertModal from "../../../components/common/AlertModal.jsx";
 
