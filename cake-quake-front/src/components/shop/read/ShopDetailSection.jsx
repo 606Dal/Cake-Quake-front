@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { MapPin, Clock, Phone, Star, Heart, Share2 ,ArrowLeft,Pencil} from 'lucide-react';
 import {Navigate, useNavigate} from "react-router";
 import MapModal from "./mapModal.jsx";
 import {useAuth} from "../../../store/AuthContext.jsx";
 
-import ShopLikeButton from '../../../components/shop/ShopLikeButton.jsx';
+import ShopLikeButton from '../../../components/shop/shopLikeButton.jsx';
 
 const S3_BASE_URL = import.meta.env.VITE_S3_BASE_URL;
 
