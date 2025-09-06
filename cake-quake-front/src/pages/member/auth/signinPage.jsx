@@ -38,6 +38,7 @@ const SigninPage = () => {
         }
     }, [user, navigate])
 
+    /* 리액트 쿠키 사용했을 때
     // const handleSubmit = async(e) => {
     //     e.preventDefault()
     //     setErrorMessage('') // 이전 에러 초기화
@@ -78,6 +79,7 @@ const SigninPage = () => {
     //         console.error("로그인 실패", err)
     //     }
     // }
+    */
     const handleSubmit = async (e) => {
         e.preventDefault()
         setErrorMessage('')
@@ -88,10 +90,10 @@ const SigninPage = () => {
             // 로그인 성공 후 리다이렉트 → AuthContext의 useEffect가 자동 실행됨
             console.log("로그인 성공")
             const res = await getSigninUserInfo()
-            // console.log("로그인된 유저 정보:", res)
+            console.log("로그인된 유저 정보:", res)
             setUser(res)
 
-            navigate("/") // 홈으로 이동하거나, 이후 useEffect로 role에 따라 이동
+            // navigate("/") // 홈으로 이동하거나, 이후 useEffect로 role에 따라 이동
         } catch (err) {
             const msg = err?.response?.data?.message || '로그인 중 오류가 발생했습니다.'
             setErrorMessage(msg)
