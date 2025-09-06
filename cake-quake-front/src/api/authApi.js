@@ -36,7 +36,7 @@ export const singup = async(signupData) => {
             headers: { 'Content-Type': 'application/json' }
         })
 
-        console.log(res.data)
+        // console.log(res.data)
         return res.data
 
     } catch (error) {
@@ -74,19 +74,6 @@ export const postSellerSignupStep2 = async (formData) => {
     }
 }
 
-// // 로그인 해서 토큰 얻어오기
-// export const getToken = async(userId, password) => {
-//     try {
-//         const res = await axios.post(`${baseUrl}/${endpoints.signin}`, {userId, password}, {
-//             headers: { 'Content-Type': 'application/json' }
-//         })
-//         console.log(res.data)
-//         return res.data
-
-//     } catch (error) {
-//         throw error
-//     }
-// }
 // 로그인 해서 토큰 얻어오기
 export const getToken = async(userId, password) => {
     try {
@@ -94,7 +81,7 @@ export const getToken = async(userId, password) => {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true  // 서버 쿠키를 저장하는 데 필요함.
         })
-        console.log(res.data)
+        // console.log(res.data)
         return res.data
 
     } catch (error) {
@@ -107,7 +94,7 @@ export const getSigninUserInfo = async() => {
 
     try {
         const res = await jwtAxios.get(`${baseUrl}/${endpoints.myInfo}`)
-        console.log(res.data)
+        // console.log(res.data)
         return res.data
 
     } catch (error) {
@@ -175,7 +162,7 @@ export const getMemberWithAccessToken = async (accessToken) => {
         }
     )
 
-    console.log("getMemberWithAccessToken---res.data: ", res.data)
+    // console.log("getMemberWithAccessToken---res.data: ", res.data)
 
     return res.data
 }
@@ -188,7 +175,7 @@ export const singupKakao = async(signupData) => {
             withCredentials: true
         })
 
-        console.log(res.data)
+        // console.log(res.data)
         return res.data
 
     } catch (error) {
@@ -250,7 +237,7 @@ export const verifyPassword = async(form) => {
     try {
         const res = await jwtAxios.post(`${baseUrl}/${endpoints.verifyPassword}`, form)
 
-        console.log(res.data)
+        // console.log(res.data)
         return res.data
     } catch (error) {
         console.log("접근 오류:")
@@ -263,7 +250,7 @@ export const changePassword = async(form) => {
     try {
         const res = await jwtAxios.patch(`${baseUrl}/${endpoints.password}`, form)
 
-        console.log(res.data)
+        // console.log(res.data)
         return res.data
     } catch (error) {
         console.log("접근 오류:")
