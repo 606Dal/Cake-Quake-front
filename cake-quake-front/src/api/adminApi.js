@@ -23,7 +23,7 @@ export const getpendingSellerList = async(page, size, status, type, keyword) => 
 
         const res = await jwtAxios.get(`${baseUrl}/${endpoints.sellerPending}`, { params })
 
-        console.log("API data: ",res)
+        // console.log("API data: ",res)
         return res
     } catch (error) {
         console.log("접근 오류:")
