@@ -27,6 +27,8 @@ const PendingSellerListComponent = ({
     const [formError, setFormError] = useState(null)
     const [showError, setShowError] = useState(false)
 
+    const basePath = import.meta.env.VITE_S3_BASE_URL;
+
     useEffect(() => {
         if (showError) {
             const timer = setTimeout(() => setShowError(false), 3000)
@@ -180,34 +182,30 @@ const PendingSellerListComponent = ({
                                                     onChange={(e) => {
                                                         const selected = e.target.value
                                                         let fileUrl = ""
-                                                        let basePath = ""
 
                                                         switch (selected) {
                                                             case "business":
                                                                 fileUrl = pending.businessCertificateUrl
-                                                                basePath = "http://localhost/selleruploads/"
                                                                 break;
                                                             case "shop":
                                                                 fileUrl = pending.shopImageUrl
-                                                                basePath = "http://localhost/shop/Images/"
                                                                 break;
                                                             case "sanitation":
                                                                 fileUrl = pending.sanitationCertificateUrl
-                                                                basePath = "http://localhost/selleruploads/"
                                                                 break;
                                                             default:
                                                                 return
                                                         }
 
                                                         if (fileUrl) {
-                                                            window.open(`${basePath}${fileUrl}`, "_blank")
+                                                            window.open(`${basePath}pendingSellerUploads/${fileUrl}`, "_blank")
                                                         } else {
-                                                            setFormError({message: "파일이 없습니다.", type: 'error'});
-                                                            setShowError(true);
+                                                            setFormError({message: "파일이 없습니다.", type: 'error'})
+                                                            setShowError(true)
                                                         }
 
                                                         // 선택 초기화 (선택 후 자동 초기화되도록)
-                                                        e.target.value = "";
+                                                        e.target.value = ""
                                                     }}
                                                     className="w-full px-2 py-1 text-sm border rounded bg-white shadow-sm"
                                                 >
