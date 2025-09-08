@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import LoadingSpinner from "../../common/loadingSpinner";
 import AlertModal from "../../common/AlertModal.jsx";
+import React from "react";
 
 
 const PendingSellerListComponent = ({
@@ -28,7 +29,6 @@ const PendingSellerListComponent = ({
     const [showError, setShowError] = useState(false)
 
     const basePath = import.meta.env.VITE_S3_BASE_URL;
-    console.log("basePath: ", basePath)
 
     useEffect(() => {
         if (showError) {
