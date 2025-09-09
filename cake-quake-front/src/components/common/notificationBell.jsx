@@ -61,7 +61,7 @@ function NotificationBell() {
         }
     };
 
-    const unreadCount = notifications.filter(n => !n.isRead).length;
+    const unreadCount = (notifications ?? []).filter(n => !n.isRead).length;
 
     const handleClickNotification = async (noti) => {
         if (!noti.isRead) {
