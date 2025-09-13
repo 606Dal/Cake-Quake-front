@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 // 이 컴포넌트에서 사용할 이미지 URL을 미리 정의합니다.
 // 실제 이미지 파일로 교체해주세요.
-const CAKE_IMAGE_1 = '/welcomeImages/1.png';
+const CAKE_IMAGE_1 = '/welcomeImages/1.jpg';
 const CAKE_IMAGE_2 = '/welcomeImages/2.jpg';
 const CAKE_IMAGE_3 = '/welcomeImages/3.jpg';
 const CAKE_IMAGE_4 = '/welcomeImages/4.jpg';
