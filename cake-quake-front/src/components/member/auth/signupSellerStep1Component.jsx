@@ -81,6 +81,7 @@ const SignupSellerStep1Component = ({
                         required
                         maxLength={13} // 010-1234-5678까지 최대 13자
                         inputMode="numeric" // 모바일 숫자 키패드 유도
+                        disabled={isVerified} // 인증 완료 시 비활성화
                         className="w-full px-4 py-2 border rounded-lg"
                         ref={inputRefs.phoneNumber}
                     />

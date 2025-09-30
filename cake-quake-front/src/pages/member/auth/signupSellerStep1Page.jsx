@@ -65,8 +65,18 @@ const SignupSellersStep1Page = () => {
 
     // 전화번호 입력 받을 때 '-' 하이픈 자동 추가
     const handlePhoneNumberChange = (e) => {
+        let value = e.target.value
+        const inputType = e.nativeEvent.inputType
+
         // 숫자만 추출
-        const rawValue = e.target.value.replace(/\D/g, "")
+        let rawValue = value.replace(/\D/g, "")
+
+        // 하이픈 뒤에서 백스페이스 사용할 경우
+        if (inputType === "deleteContentBackward") {
+            if (e.target.value.length == 4 || e.target.value.length == 8) {
+                rawValue = rawValue.slice(0, -1)
+            }
+        }
 
         let formatted = ""
         if (rawValue.length < 4) {

@@ -69,12 +69,16 @@ const VerifyModal = ({ phoneNumber, type, onClose, onSuccess }) => {
                     )}
 
                     {!sent ? (
-                        <button
-                            onClick={handleSendCode}
-                            className="w-full bg-blue-400 text-white py-2 rounded hover:bg-blue-600"
-                        >
-                            인증 코드 전송
-                        </button>
+                        isLoading ? (
+                            <LoadingSpinner />
+                        ) : (
+                            <button
+                                onClick={handleSendCode}
+                                className="w-full bg-blue-400 text-white py-2 rounded hover:bg-blue-600"
+                            >
+                                인증 코드 전송
+                            </button>
+                        )
                     ) : (
                         <>
                             <input
