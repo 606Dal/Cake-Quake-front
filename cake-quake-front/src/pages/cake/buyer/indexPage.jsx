@@ -135,7 +135,6 @@ function CakeAllList() {
     }, [hasNext, isLoading, selectedMainCategory]);
 
     const handlePickupSchedulerComplete = (scheduleInfo) => {
-        console.log("픽업 스케줄러에서 선택된 정보:", scheduleInfo);
         setPickupScheduleInfo(scheduleInfo); // 상태에 저장 (필요하다면)
         // 여기서는 매장 상세 페이지로 이동하는 로직은 PickupScheduler 내부에서 처리하므로,
         // 이 콜백에서는 추가적인 라우팅 없이 정보를 받기만 합니다.

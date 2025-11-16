@@ -127,7 +127,7 @@ export default function PaymentStartPage() {
                                 >
                                     <div className="flex items-center">
                                         <img
-                                            src={item.thumbnailImageUrl ? `${S3_BASE_URL}${item.thumbnailImageUrl}` : '/cakeImage/default-cake-image.jpg'}
+                                            src={item.thumbnailImageUrl ? `${S3_BASE_URL}uploads/${item.thumbnailImageUrl}` : '/cakeImage/default-cake-image.jpg'}
                                             alt={item.cname}
                                             className="w-12 h-12 rounded mr-3 object-cover"
                                         />

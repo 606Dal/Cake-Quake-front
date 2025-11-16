@@ -80,7 +80,7 @@ const SellerOrderDetail = ({ order, onStatusChange, isUpdating }) => {
                                 {product.thumbnailImageUrl && (
                                     <div className="w-20 h-20 flex-shrink-0">
                                         <img src={product.thumbnailImageUrl
-                                            ? `${S3_BASE_URL}${product.thumbnailImageUrl}`
+                                            ? `${S3_BASE_URL}uploads/${product.thumbnailImageUrl}`
                                             : '/cakeImage/default-cake.png'}
                                              alt={product.name} className="w-full h-full object-cover rounded-md" />
                                     </div>

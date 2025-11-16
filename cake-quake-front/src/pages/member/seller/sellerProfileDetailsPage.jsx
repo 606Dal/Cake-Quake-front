@@ -27,8 +27,6 @@ const SellerProfileDetailsPage = () => {
         queryFn: async () => {
             await new Promise(resolve => setTimeout(resolve, 2000)); // 로딩 확인용
 
-            console.log("---------------query run getSellerProfile()-------------------")
-
             const res = await getSellerProfile()
             return res.data // ApiResponseDTO → data
         },
@@ -40,7 +38,6 @@ const SellerProfileDetailsPage = () => {
     useEffect(() => {
         if (sellerData) {
             setProfile(sellerData) // zustand로 저장
-            console.log("zustand에 sellerData 저장")
         }
     }, [sellerData])
 

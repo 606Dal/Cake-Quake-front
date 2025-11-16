@@ -23,7 +23,7 @@ const OrderItemsDisplay = ({ orderItems }) => {
                             paddingBottom: '10px'
                         }}>
                             <img
-                                src={thumbnail ? `${S3_BASE_URL}${thumbnail}` : '/cakeImage/default-cake.png'}
+                                src={thumbnail ? `${S3_BASE_URL}uploads/${thumbnail}` : '/cakeImage/default-cake.png'}
                                 alt={name}
                                 style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '4px', marginRight: '10px' }}
                             />

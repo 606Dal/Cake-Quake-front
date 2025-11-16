@@ -8,7 +8,7 @@ const kakaoAxios = axios.create({
 
 kakaoAxios.interceptors.request.use((config) => {
 
-    console.log("access_token =", getCookie("access_token"));
+    // console.log("access_token =", getCookie("access_token"));
     const token = getCookie("access_token");
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;

@@ -9,7 +9,7 @@ const ShopCard = ({ shop }) => {
     const {shopName, address,thumbnailUrl,rating} =shop;
 
 
-    const imgSrc = thumbnailUrl ? `${S3_BASE_URL}${thumbnailUrl}`
+    const imgSrc = thumbnailUrl ? `${S3_BASE_URL}uploads/${thumbnailUrl}`
         : DEFAULT_IMAGE;
 
     const numericRating = parseFloat(rating);

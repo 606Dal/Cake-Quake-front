@@ -7,8 +7,8 @@ export const getAllIngredients = async ({page = 1, size= 20, sortField = 'name'}
     const res = await jwtAxios.get(`${baseUrl}/ingredients`,{
         params: {page,size, sortField},
     })
-    console.log('⚙️ full axiosRes:', res);
-    console.log('⚙️ axiosRes.data:', res.data);
+    // console.log('⚙️ full axiosRes:', res);
+    // console.log('⚙️ axiosRes.data:', res.data);
     return res.data
 }
 //관리자용 단건 조회

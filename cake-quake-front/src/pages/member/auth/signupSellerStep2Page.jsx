@@ -46,7 +46,6 @@ const SignupSellersStep2Page = () => {
             setShowModal(true)
             navigate("/auth/signup/seller-step1")
         }else {
-            // console.log("tempSellerId: ", tempSellerId)
             setTempSellerId(tempSellerId)
         }
     }, []);
@@ -96,7 +95,6 @@ const SignupSellersStep2Page = () => {
     useEffect(() => {
         return () => {
             if (previewUrl) {
-                // console.log("미리보기 URL 해제", previewUrl)
                 URL.revokeObjectURL(previewUrl)
             }
         }

@@ -158,9 +158,9 @@ const SignupSellersStep1Page = () => {
     const handleVerifyBusiness = async () => {
         const { businessNumber, bossName, openingDate } = form
 
-        const businessNumberRegex = /^\d{10}$/;
-        const bossNameRegex = /^[가-힣a-zA-Z]+$/;
-        const openingDateRegex = /^\d{8}$/; // YYYYMMDD
+        const businessNumberRegex = /^\d{10}$/
+        const bossNameRegex = /^[가-힣a-zA-Z]+$/
+        const openingDateRegex = /^\d{8}$/      // YYYYMMDD
 
         // 기본 유효성 검사 (빈 값 체크)
         if (!businessNumber || !bossName || !openingDate) {
@@ -283,7 +283,7 @@ const SignupSellersStep1Page = () => {
             inputRefs.businessNumber.current?.focus()
         }
         // businessCheck일 경우에는 페이지 이동 없음
-        setModalType(null); // 상태 초기화
+        setModalType(null) // 상태 초기화
     }
 
     return (

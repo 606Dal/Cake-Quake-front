@@ -26,7 +26,7 @@ export default function useCart() {
             const data = await getCartItems();
             setItems(data.items);
             setCartTotalPrice(data.cartTotalPrice);
-            console.log("✅ 장바구니 데이터 불러오기 성공:", data);
+            // console.log("✅ 장바구니 데이터 불러오기 성공:", data);
         } catch (err) {
             console.error('❌ 장바구니 불러오기 실패:', err);
             // 에러를 밖으로 던져서 CartPage에서 처리할 수 있게 함

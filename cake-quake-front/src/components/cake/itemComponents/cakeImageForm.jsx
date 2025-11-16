@@ -29,7 +29,7 @@ function CakeImageUploadForm({ images, onImageChange, onImageRemove, onThumbnail
                     return (
                         <div key={index} className="relative w-30 h-30 flex-shrink-0">
                             <img
-                                src={img.file ? img.src : `${s3BaseUrl}${img.src}`}
+                                src={img.file ? img.src : `${s3BaseUrl}uploads/${img.src}`}
                                 alt="미리보기"
                                 onClick={() => onThumbnailSelect(index)}
                                 className={`w-full h-24 object-cover rounded-lg border-2 ${

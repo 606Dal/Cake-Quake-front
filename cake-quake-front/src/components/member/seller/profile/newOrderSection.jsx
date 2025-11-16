@@ -147,7 +147,7 @@ const NewOrdersSection = () => {
                                 {order.items?.[0]?.thumbnailImageUrl ? (
                                     <img
                                         src={order.items[0].thumbnailImageUrl
-                                            ? `${S3_BASE_URL}${order.items[0].thumbnailImageUrl}`
+                                            ? `${S3_BASE_URL}uploads/${order.items[0].thumbnailImageUrl}`
                                             : DEFAULT_ORDER_ITEM_IMAGE}
                                         alt="주문 이미지"
                                         className="w-full h-full object-cover"

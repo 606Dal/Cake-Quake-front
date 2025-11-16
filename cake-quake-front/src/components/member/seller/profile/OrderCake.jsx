@@ -14,7 +14,7 @@ const OrderCard = ({ order, type, onActionClick }) => {
             <img src={order.cakeImage
                 ? (order.cakeImage.startsWith('http')
                     ? order.cakeImage
-                    : `${S3_BASE_URL}${order.cakeImage}`)
+                    : `${S3_BASE_URL}uploads/${order.cakeImage}`)
                 : 'https://placehold.co/80x80?text=No+Image'}
                  alt="케이크 이미지" className="w-20 h-20 md:w-24 md:h-24 rounded-lg object-cover mr-4 border border-blue-100" />
             <div className="flex-grow">

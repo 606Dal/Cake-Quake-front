@@ -88,9 +88,7 @@ const SigninPage = () => {
             // 서버에서 쿠키로 토큰 설정 + 로그인 정보(userId, uname, role)만 반환
             await getToken(userId, password)
             // 로그인 성공 후 리다이렉트 → AuthContext의 useEffect가 자동 실행됨
-            console.log("로그인 성공")
             const res = await getSigninUserInfo()
-            // console.log("로그인된 유저 정보:", res)
             setUser(res)
 
             // navigate("/") // 홈으로 이동하거나, 이후 useEffect로 role에 따라 이동

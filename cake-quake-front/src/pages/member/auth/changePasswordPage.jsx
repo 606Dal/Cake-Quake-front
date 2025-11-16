@@ -55,7 +55,6 @@ const ChangePasswordPage = () => {
             setIsLoading(true)
             const pwData = PasswordChangeDTO(form) // form → DTO 변환
 
-            // console.log("pwData: ", pwData)
             const res = await changePassword(pwData)
 
             setModalMsg(res.message)

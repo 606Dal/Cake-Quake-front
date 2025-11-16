@@ -4,6 +4,7 @@ import ShopImageEditor from './ShopImageEditor';
 import { getShopDetail, updateShop } from '../../../api/shopApi.jsx';
 import ShopImageGallery from "../read/ShopImageGallery.jsx";
 import AlertModal from "../../common/AlertModal.jsx";
+import { useNavigate } from "react-router";
 
 const ShopEditor = ({ shopId }) => {
     // 매장 기본 정보 및 기존 이미지 URL을 관리하는 상태
@@ -28,6 +29,8 @@ const ShopEditor = ({ shopId }) => {
 
     const [formError, setFormError] = useState(null);
     const [showError, setShowError] = useState(false);
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (showError) {
@@ -118,6 +121,9 @@ const ShopEditor = ({ shopId }) => {
             const updatedThumbnail = (updatedData.imageUrls || []).findIndex(img => img.isThumbnail);
             setEditorThumbnailIndex(updatedThumbnail !== -1 ? updatedThumbnail : null);
 
+            // 화면을 맨 위로 스크롤
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
                 setFormError({message: `매장 정보 수정 중 오류가 발생했습니다: ${error.response.data.message}`, type: 'error'});
@@ -155,13 +161,21 @@ const ShopEditor = ({ shopId }) => {
             {/* --- */}
             <hr className="my-6 border-gray-300" />
 
-            <div className="flex justify-center mt-6">
+            <div className="flex justify-center mt-6 gap-4">
                 {/* 매장 정보 저장 버튼 */}
                 <button
                     onClick={handleSubmit}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200"
+                    className="min-w-[160px] bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200"
                 >
                     매장 정보 저장
+                </button>
+
+                {/* 매장 관리로 이동 버튼 */}
+                <button
+                    onClick={() => navigate(`/shops/${shopId}`)}
+                    className="min-w-[160px] bg-gray-600 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition duration-200"
+                >
+                    매장 관리로 이동
                 </button>
             </div>
         </div>

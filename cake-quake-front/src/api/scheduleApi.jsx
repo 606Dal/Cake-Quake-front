@@ -12,7 +12,6 @@ export const getAvailableTimes = async (shopId, date) =>{
         }
     });
     const times = response.data;
-    console.log(`API 응답 - 매장 ${shopId}, 날짜 ${date}의 예약 가능한 시간:`, times);
     return times;
 
 }
@@ -30,7 +29,6 @@ export const getAvailableShops=async (date, time = null, checkSlots = true, page
             size: size
         }
     });
-    console.log(`API 응답 - 날짜 ${date}, 시간 ${time}, 슬롯 체크 ${checkSlots}, 페이지 ${page}, 사이즈 ${size}의 예약 가능한 매장:`, response.data);
 
     return {
         content: response.data.content, // 실제 매장 데이터 배열
@@ -48,7 +46,6 @@ export const getShopOperatingHours = async (shopId, date) => {
         const response = await jwtAxios.get(`${prefix}/schedule/shops/${shopId}/operating-hours`, {
             params: { date }
         });
-        console.log(`API 응답 - 매장 ${shopId}, 날짜 ${date}의 운영 시간:`, response.data);
         return response.data;
     } catch (error) {
         console.error(`Error fetching operating hours for shop ${shopId} on ${date}:`, error);
@@ -65,7 +62,6 @@ export const getOccupiedTimeSlots = async (shopId, date) => {
         const response = await jwtAxios.get(`${prefix}/schedule/shops/${shopId}/occupied-time-slots`, {
             params: { date }
         });
-        console.log(`API 응답 - 매장 ${shopId}, 날짜 ${date}의 예약된 시간 슬롯:`, response.data);
         return response.data;
     } catch (error) {
         console.error(`Error fetching occupied time slots for shop ${shopId} on ${date}:`, error);
@@ -82,7 +78,6 @@ export const getShopDetails = async (shopId) => {
         // 실제 백엔드 API 엔드포인트에 맞게 수정해주세요.
         // 예를 들어, 매장 상세 정보를 제공하는 API가 /api/v1/shops/{shopId} 라고 가정합니다.
         const response = await jwtAxios.get(`${prefix}/shops/${shopId}`); // prefix 대신 API_SERVER_HOST를 사용하거나, 새 prefix 변수 필요.
-        console.log(`API 응답 - 매장 ${shopId}의 상세 정보:`, response.data);
         return response.data; // 매장 상세 정보 객체 반환 (shopName, address 등 포함)
     } catch (error) {
         console.error(`Error fetching shop details for shopId ${shopId}:`, error);

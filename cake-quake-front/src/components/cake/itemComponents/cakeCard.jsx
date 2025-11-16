@@ -8,7 +8,7 @@ function CakeCard({ cake,onClick }) {
 
     const {cname, price, thumbnailImageUrl, isOnsale} = cake;
     const imgSrc = thumbnailImageUrl
-        ? `${S3_BASE_URL}${thumbnailImageUrl}`
+        ? `${S3_BASE_URL}uploads/${thumbnailImageUrl}`
         : DEFAULT_IMAGE;
 
     if (!cake) return null;

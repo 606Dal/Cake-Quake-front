@@ -16,7 +16,7 @@ export default function OrderListPage() {
                 // getOrderList API 호출
                 // 서버의 페이지 인덱스가 0부터 시작하므로 page: 0으로 요청하는 것이 올바름
                 const data = await getOrderList({ page: pageInfo.currentPage, size: 10 });
-                console.log("📦 주문 리스트 응답:", data); // 응답 데이터 로깅
+                // console.log("📦 주문 리스트 응답:", data); // 응답 데이터 로깅
 
                 setOrders(data.orders || []); // 주문 목록 상태 업데이트
                 setPageInfo(data.pageInfo); // 페이지 정보 상태 업데이트

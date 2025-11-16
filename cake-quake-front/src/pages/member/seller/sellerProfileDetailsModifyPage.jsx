@@ -35,7 +35,6 @@ const SellerProfileDetailsModifyPage = () => {
     const { data: sellerData, isLoading, isError, error } = useQuery({
         queryKey: ['sellerProfile'],
         queryFn: async () => {
-            console.log("---------------query run 판매자 마이페이지 조회-------------------")
             const res = await getSellerProfile()
             return res.data
         },
@@ -145,7 +144,6 @@ const SellerProfileDetailsModifyPage = () => {
             return
         }
 
-        // console.log(form)
         try {
             setButtonLoading(true)
             

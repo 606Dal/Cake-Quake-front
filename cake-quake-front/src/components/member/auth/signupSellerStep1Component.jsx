@@ -148,18 +148,22 @@ const SignupSellerStep1Component = ({
                             ref={inputRefs.isBusinessVerified}
                         />
 
-                        <button
-                            type="button"
-                            onClick={handleVerifyBusiness}
-                            disabled={isBusinessVerified}
-                            className={`w-full py-2 rounded-lg font-bold ${
-                                isBusinessVerified
-                                ? "bg-green-100 text-green-700 cursor-not-allowed"
-                                : "bg-blue-100 text-gray-700 hover:bg-blue-200"
-                            }`}
-                        >
-                            {isBusinessVerified ? "사업자 등록 인증 완료" : "사업자 등록 조회"}
-                        </button>
+                        {isLoading ? (
+                            <LoadingSpinner />
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={handleVerifyBusiness}
+                                disabled={isBusinessVerified}
+                                className={`w-full py-2 rounded-lg font-bold ${
+                                    isBusinessVerified
+                                    ? "bg-green-100 text-green-700 cursor-not-allowed"
+                                    : "bg-blue-100 text-gray-700 hover:bg-blue-200"
+                                }`}
+                            >
+                                {isBusinessVerified ? "사업자 등록 인증 완료" : "사업자 등록 조회"}
+                            </button>
+                        )}
                     </div>
 
                     <div>

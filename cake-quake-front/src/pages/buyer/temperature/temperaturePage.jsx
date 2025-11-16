@@ -25,7 +25,6 @@ export default function TemperaturePage() {
         try {
             // 1. 사용자 프로필을 먼저 가져와 UID를 추출합니다.
             const profileApiResponse = await getBuyerProfile();
-            console.log("getBuyerProfile 응답 (TemperaturePage):", profileApiResponse);
 
             if (profileApiResponse.success && profileApiResponse.data && profileApiResponse.data.uid) {
                 const fetchedUid = profileApiResponse.data.uid;
@@ -33,7 +32,6 @@ export default function TemperaturePage() {
 
                 // 2. 추출된 UID를 사용하여 온도 정보를 가져옵니다.
                 const tempApiResponse = await getTemperature(fetchedUid);
-                console.log("getTemperature 응답 (TemperaturePage):", tempApiResponse);
                 if (typeof tempApiResponse?.temperature === 'number') {
                     setTemperature(tempApiResponse.temperature);
                 } else {

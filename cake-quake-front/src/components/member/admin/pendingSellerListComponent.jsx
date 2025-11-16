@@ -148,10 +148,15 @@ const PendingSellerListComponent = ({
                                 <React.Fragment key={pending.tempSellerId}>
                                     <tr
                                         className="border-t text-xs md:text-sm"
-                                        ref={isLast ? observerTargetRef : null}  // 자동으로 다음 페이지 로딩  
-                                        onClick={() => toggleRow(pending.tempSellerId)}
+                                        ref={isLast ? observerTargetRef : null}  // 자동으로 다음 페이지 로딩
                                     >
-                                        <td className="px-2 md:px-4 py-2">
+                                        <td 
+                                            className="px-2 md:px-4 py-2"
+                                            onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    toggleRow(pending.tempSellerId)
+                                                }}
+                                        >
                                             <span className="mr-1">{isOpen ? "▼" : "▶"}</span>
                                             {pending.tempSellerId}
                                         </td>
@@ -212,8 +217,23 @@ const PendingSellerListComponent = ({
                                                 >
                                                     <option value="" disabled>파일 보기</option>
                                                     <option value="business">사업자 등록증</option>
-                                                    <option value="shop">매장 대표 이미지</option>
-                                                    <option value="sanitation">위생 인증서</option>
+                                                    {/* 매장 대표 이미지 - PENDING이면 비활성화 */}
+                                                    <option
+                                                        value="shop"
+                                                        disabled={pending.status === 'APPROVED'}
+                                                        className={pending.status === 'APPROVED' ? "text-gray-400" : ""}
+                                                    >
+                                                        매장 대표 이미지
+                                                    </option>
+
+                                                    {/* 위생 인증서 - PENDING이면 비활성화 */}
+                                                    <option
+                                                        value="sanitation"
+                                                        disabled={pending.status === 'APPROVED'}
+                                                        className={pending.status === 'APPROVED' ? "text-gray-400" : ""}
+                                                    >
+                                                        위생 인증서
+                                                    </option>
                                                 </select>
                                             </div>
                                         </td>

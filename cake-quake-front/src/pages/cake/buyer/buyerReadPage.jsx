@@ -143,11 +143,11 @@ function BuyerCakeReadPage() {
             optionCnt: option.optionCnt || 1,
         }));
 
-        console.log("DEBUG: 장바구니에 담을 데이터 (최종 전송 전):", JSON.stringify({
-            cakeItemId: cake.cakeDetailDTO.cakeId,
-            productCnt: 1,
-            cakeOptions: formattedOptions
-        }, null, 2));
+        // console.log("DEBUG: 장바구니에 담을 데이터 (최종 전송 전):", JSON.stringify({
+        //     cakeItemId: cake.cakeDetailDTO.cakeId,
+        //     productCnt: 1,
+        //     cakeOptions: formattedOptions
+        // }, null, 2));
 
         try {
             setIsAddingToCart(true);
@@ -216,7 +216,7 @@ function BuyerCakeReadPage() {
     const S3_BASE_URL = import.meta.env.VITE_S3_BASE_URL;
     const thumbnailUrl =
         cake && cake.cakeDetailDTO && cake.cakeDetailDTO.thumbnailImageUrl
-            ? `${S3_BASE_URL}${cake.cakeDetailDTO.thumbnailImageUrl}`
+            ? `${S3_BASE_URL}uploads/${cake.cakeDetailDTO.thumbnailImageUrl}`
             : "기본_이미지_경로.png";
 
     return (

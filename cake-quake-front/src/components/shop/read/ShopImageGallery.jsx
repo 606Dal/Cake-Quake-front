@@ -8,7 +8,7 @@ const ShopImageGallery = ({ images }) => {
     useEffect(() => {
         if (images && images.length > 0) {
             const thumbnail = images.find(img => img.isThumbnail);
-            setMainImage(thumbnail ? `${S3_BASE_URL}uploads/${thumbnail.shopImageUrl}` : `${S3_BASE_URL}${images[0].shopImageUrl}`);
+            setMainImage(thumbnail ? `${S3_BASE_URL}uploads/${thumbnail.shopImageUrl}` : `${S3_BASE_URL}uploads/${images[0].shopImageUrl}`);
         } else {
             setMainImage(null);
         }

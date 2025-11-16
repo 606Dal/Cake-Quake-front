@@ -57,7 +57,7 @@ function CakeDetailComponent({
     const S3_BASE_URL = import.meta.env.VITE_S3_BASE_URL;
 
     const thumbnailImgSrc = thumbnailImageUrl
-        ? `${S3_BASE_URL}${thumbnailImageUrl}`
+        ? `${S3_BASE_URL}uploads/${thumbnailImageUrl}`
         : DEFAULT_IMAGE;
 
     const allImages = [
@@ -66,7 +66,7 @@ function CakeDetailComponent({
             .filter(imgObj => !imgObj.isThumbnail)
             .map(imgObj => ({
                 ...imgObj,
-                imageUrl: `${S3_BASE_URL}${imgObj.imageUrl}`
+                imageUrl: `${S3_BASE_URL}uploads/${imgObj.imageUrl}`
             }))
     ];
 
@@ -83,7 +83,7 @@ function CakeDetailComponent({
     const currentShopName = shop?.shopName || '매장 정보 없음';
     const shopAddress = shop?.address || '주소 정보 없음';
     const shopThumbnail = shop?.thumbnailUrl
-        ? `${S3_BASE_URL}upload/${shop.thumbnailUrl}`
+        ? `${S3_BASE_URL}uploads/${shop.thumbnailUrl}`
         : DEFAULT_SHOP_THUMBNAIL;
 
     return (

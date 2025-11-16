@@ -18,7 +18,6 @@ const BuyerProfileDetailsPage = () => {
     }, [])
 
     const { user } = useAuth() // 로그인한 유저 정보
-    // console.log("---BuyerProfileDetailsPage---user: ", user.uid)
     const navigate = useNavigate()
     const { setProfile } = useMemberStore()
 
@@ -26,8 +25,6 @@ const BuyerProfileDetailsPage = () => {
         queryKey: ['buyerProfile'],
         queryFn: async () => {
             // await new Promise(resolve => setTimeout(resolve, 2000)); // 로딩 확인용
-            console.log("---------------query run-------------------")
-
             const res = await getBuyerProfile()
             return res.data // ApiResponseDTO → data
         },
@@ -39,7 +36,6 @@ const BuyerProfileDetailsPage = () => {
     useEffect(() => {
         if (buyerData) {
             setProfile(buyerData) // zustand로 저장
-            console.log("zustand에 buyerData 저장")
         }
     }, [buyerData])
 

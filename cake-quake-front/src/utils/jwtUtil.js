@@ -1,17 +1,98 @@
 import axios from "axios";
 
-
 /*
     25.07.02 리액트 쿠키에서 HTTPOnly 쿠키로 변경. 백 서버에서 토큰을 받아옴.
 */
-// const jwtAxios = axios.create()
 const jwtAxios = axios.create({
-    // baseURL: 'http://localhost:8080',
     withCredentials: true // HTTPOnly 쿠키 저장을 위해 사용.
 })
+
 const baseUrl = import.meta.env.VITE_API_BASE_URL
 
-// //요청 보내기 전에 추가 작업(변경 전)
+
+// 요청 보내기 전 추가 작업
+const beforeReq = (config) => {
+    return config
+}
+
+// 요청 실패 처리
+const requestFail = (err) => {
+    console.error("요청 오류:", err)
+    return Promise.reject(err)
+}
+
+
+// 성공적인 응답이 왔을 때 추가 작업
+const beforeRes = async (res) => {
+    return res
+}
+
+// 응답 실패 시 추가 작업
+const responseFail = async (err) => {
+    // console.log("---------응답 실패 오류---------")
+    if (err.response?.status === 401) {
+        // console.warn("401 에러 - 인증 만료일 수 있음")
+
+        const errorCode = err.response.data?.code
+
+        // 서버에서 에러 코드 802: 액세스 토큰 만료
+        if (errorCode === 802) {
+            // console.log("---------만료된 토큰을 새로 고침---------")
+            try {
+                // 리프레시 요청 (쿠키 자동 전송)
+                // console.log("---토큰 재발급 요청 시작")
+                const res = await axios.post(`${baseUrl}/auth/refresh`, {}, {
+                    withCredentials: true
+                })
+                return true
+
+            } catch (refreshError) {
+                console.error("Token refresh failed", refreshError)
+                const refreshErrorCode = refreshError.response?.data?.code
+                // refreshToken 도 유효하지 않음 (재발급 실패)
+                if (refreshErrorCode === 803) {
+                    // console.log("---재로그인 필요 (refreshToken도 만료됨)")
+                    // 아래 페이지는 로그인 없이 이동 가능
+                    const allowedPaths = [
+                        "/auth/signin", 
+                        "/", 
+                        "/auth/kakao", 
+                        "/auth/signup", 
+                        "/auth/signup/buyer",
+                        "/auth/signup/seller-step1",
+                        "/auth/signup/seller-step2",
+                    ]
+                    if (!allowedPaths.includes(location.pathname)) {
+                        window.location.replace("/auth/signin")
+                    }
+                    return false
+                }// end if
+            } // try~catch
+        }// end if
+        
+    }// end if
+
+    return Promise.reject(err)
+};
+
+
+// 에러 메시지 추출
+function getErrorMsg(err) {
+    const errorObj = err.response?.data
+
+    if (errorObj?.error) {
+        const errorMsg = errorObj.error
+        console.log("에러 메시지:", errorMsg)
+        return errorMsg
+    }
+}
+
+jwtAxios.interceptors.request.use(beforeReq, requestFail)
+jwtAxios.interceptors.response.use(beforeRes, responseFail)
+
+
+
+// //(토큰 방식 변경 전)요청 보내기 전에 추가 작업
 // const beforeReq = (config) => {
 //     console.log("---------요청 전 작업---------")
 
@@ -25,11 +106,6 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
 //     config.headers.Authorization = `Bearer ${accessToken}`
 //     return config
 // }
-    // 요청 보내기 전 추가 작업
-    const beforeReq = (config) => {
-        console.log("요청 전 작업 (HttpOnly 쿠키 기반)")
-        return config
-    }
 
 // // 요청 실패 처리(변경 전)
 // const requestFail = (err) => {
@@ -37,19 +113,6 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
 
 //     return Promise.reject(err)
 // }
-    // 요청 실패 처리
-    const requestFail = (err) => {
-        console.error("요청 오류:", err)
-        return Promise.reject(err)
-    }
-
-    // 성공적인 응답이 왔을 때 추가 작업
-    const beforeRes = async (res) => {
-        console.log("---------응답 전 처리---------")
-
-        return res
-    }
-
 
 // // 응답 실패 시 추가 작업(변경 전)
 // const responseFail = async (err) => {
@@ -79,56 +142,6 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
 
 //     return Promise.reject(err)
 // }
-
-    // 응답 실패 시 추가 작업
-    const responseFail = async (err) => {
-        console.log("---------응답 실패 오류---------")
-        console.log(err)
-        if (err.response?.status === 401) {
-            // console.warn("401 에러 - 인증 만료일 수 있음")
-
-            const errorCode = err.response.data?.code
-
-            // 서버에서 에러 코드 802: 액세스 토큰 만료
-            if (errorCode === 802) {
-                console.log("---------만료된 토큰을 새로 고침---------")
-                try {
-                    // 리프레시 요청 (쿠키 자동 전송)
-                    console.log("---토큰 재발급 요청 시작")
-                    const res = await axios.post(`${baseUrl}/auth/refresh`, {}, {
-                        withCredentials: true
-                    })
-                    // console.log("리프레시토큰 요청 후: ", res)
-                    return true
-
-                } catch (refreshError) {
-                    console.log("Token refresh failed", refreshError)
-                    const refreshErrorCode = refreshError.response?.data?.code
-                    // refreshToken 도 유효하지 않음 (재발급 실패)
-                    if (refreshErrorCode === 803) {
-                        console.log("---재로그인 필요 (refreshToken도 만료됨)")
-                        // 아래 페이지는 로그인 없이 이동 가능
-                        const allowedPaths = [
-                            "/auth/signin", 
-                            "/", 
-                            "/auth/kakao", 
-                            "/auth/signup", 
-                            "/auth/signup/buyer",
-                            "/auth/signup/seller-step1",
-                            "/auth/signup/seller-step2",
-                        ]
-                        if (!allowedPaths.includes(location.pathname)) {
-                            window.location.replace("/auth/signin")
-                        }
-                        return false
-                    }// end if
-                } // try~catch
-            }// end if
-            
-        }// end if
-
-        return Promise.reject(err)
-    };
 
 // // 토큰 갱신 함수(변경 전)
 // async function refreshTokens(originalConfig) {
@@ -170,20 +183,5 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
 //     }
 
 // }
-
-// 에러 메시지 추출
-function getErrorMsg(err) {
-    const errorObj = err.response?.data
-
-    if (errorObj?.error) {
-        const errorMsg = errorObj.error
-        console.log("에러 메시지:", errorMsg)
-        return errorMsg
-    }
-}
-
-jwtAxios.interceptors.request.use(beforeReq, requestFail)
-
-jwtAxios.interceptors.response.use(beforeRes, responseFail)
 
 export default jwtAxios

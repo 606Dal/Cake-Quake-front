@@ -35,10 +35,7 @@ export const singup = async(signupData) => {
         const res = await axios.post(`${baseUrl}/${endpoints.signupBuyers}`, signupData, {
             headers: { 'Content-Type': 'application/json' }
         })
-
-        // console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -51,9 +48,7 @@ export const postSellerSignupStep1 = async (formData) => {
         const res = await axios.post(`${baseUrl}/${endpoints.signupSellerStep1}`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         })
-        console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -66,9 +61,7 @@ export const postSellerSignupStep2 = async (formData) => {
         const res = await axios.post(`${baseUrl}/${endpoints.signupSellerStep2}`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         })
-        console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -81,9 +74,7 @@ export const getToken = async(userId, password) => {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true  // 서버 쿠키를 저장하는 데 필요함.
         })
-        // console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -94,9 +85,7 @@ export const getSigninUserInfo = async() => {
 
     try {
         const res = await jwtAxios.get(`${baseUrl}/${endpoints.myInfo}`)
-        // console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -108,7 +97,6 @@ export const postSignout = async() => {
 
     try {
         await jwtAxios.post(`${baseUrl}/${endpoints.signout}`)
-
     } catch (error) {
         throw error
     }
@@ -119,7 +107,6 @@ export const postSignout = async() => {
 export const getKakaoLoginLink = () => {
 
     const kakaoURL = `${auth_code_path}?client_id=${rest_api_key}&redirect_uri=${redirect_uri}&response_type=code`
-
     return kakaoURL
 }
 
@@ -139,7 +126,6 @@ export const getKakaoAccessToken = async (authCode) => {
     }
     try {
         const res = await axios.post(access_token_url, params , header)
-    
         const accessToken = res.data.access_token
     
         return accessToken
@@ -161,9 +147,7 @@ export const getMemberWithAccessToken = async (accessToken) => {
             withCredentials: true
         }
     )
-
     // console.log("getMemberWithAccessToken---res.data: ", res.data)
-
     return res.data
 }
 
@@ -174,10 +158,7 @@ export const singupKakao = async(signupData) => {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true
         })
-
-        // console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -190,9 +171,7 @@ export const getVerificationCode = async(data) => {
         const res = await axios.post(`${baseUrl}/${endpoints.otpSend}`, data, {
             headers: { 'Content-Type': 'application/json' }
         })
-        // console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -204,9 +183,7 @@ export const verifyCode = async(data) => {
         const res = await axios.post(`${baseUrl}/${endpoints.otpVerify}`, data, {
             headers: { 'Content-Type': 'application/json' }
         })
-        // console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -224,9 +201,7 @@ export const verifyBusiness = async(businessData) => {
         const res = await axios.post(`${baseUrl}/${endpoints.verifyBusiness}`, payload, {
             headers: { 'Content-Type': 'application/json' }
         })
-        // console.log(res.data)
         return res.data
-
     } catch (error) {
         throw error
     }
@@ -237,10 +212,9 @@ export const verifyPassword = async(form) => {
     try {
         const res = await jwtAxios.post(`${baseUrl}/${endpoints.verifyPassword}`, form)
 
-        // console.log(res.data)
         return res.data
     } catch (error) {
-        console.log("접근 오류:")
+        console.error("접근 오류:")
         throw error
     }
 }
@@ -249,11 +223,9 @@ export const verifyPassword = async(form) => {
 export const changePassword = async(form) => {
     try {
         const res = await jwtAxios.patch(`${baseUrl}/${endpoints.password}`, form)
-
-        // console.log(res.data)
         return res.data
     } catch (error) {
-        console.log("접근 오류:")
+        console.error("접근 오류:")
         throw error
     }
 }
@@ -262,13 +234,11 @@ export const changePassword = async(form) => {
 
 
 // ---------------------------테스트용------------------------------
-
+/*
 // [TEST] 로그인 후 토큰 접근 테스트 (토큰 검증용)
 export const testToken = async() => {
     try {
         const res = await jwtAxios.get(`${baseUrl}/${endpoints.tokenTest}`)
-
-        console.log(res.data)
         return res.data
     } catch (error) {
         console.log("접근 오류:")
@@ -280,8 +250,6 @@ export const testToken = async() => {
 export const testSellerOnly = async() => {
     try {
         const res = await jwtAxios.get(`${baseUrl}/${endpoints.sellerOnly}`, header)
-
-        console.log(res.data)
         return res.data
     } catch (error) {
         console.error("판매자만 접근 가능:")
@@ -301,5 +269,5 @@ export const testAdminOnly = async() => {
         throw error
     }
 }
-
+*/
 

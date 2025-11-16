@@ -85,7 +85,7 @@ export const getDeletionRequests = async ({ page = 1, size = 10 }) => {
         `${baseUrl}/admin/review-deletion-request`,
         { params: { page, size } }
     );
-    console.log('getDeletionRequests payload →', payload);
+    // console.log('getDeletionRequests payload →', payload);
     return payload;  // { content: [...], hasNext: boolean, totalCount: number }
 };
 

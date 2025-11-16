@@ -157,7 +157,7 @@ export default function OrderDetail({
                                 <div className="w-24 h-24 mr-4 flex-shrink-0">
                                     <img
                                         src={item.thumbnailImageUrl
-                                            ? `${S3_BASE_URL}${item.thumbnailImageUrl}`
+                                            ? `${S3_BASE_URL}uploads/${item.thumbnailImageUrl}`
                                             : '/cakeImage/default-cake.png'}
                                         alt={item.cname || "케이크 이미지"}
                                         className="w-full h-full object-cover rounded-md"

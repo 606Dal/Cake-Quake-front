@@ -123,7 +123,7 @@ const SellerOrderItem = ({ order }) => {
                     {order.thumbnailImageUrl && (
                         <div className="w-16 h-16 mr-3 flex-shrink-0">
                             <img src={order.thumbnailImageUrl
-                                ? `${S3_BASE_URL}${order.thumbnailImageUrl}`
+                                ? `${S3_BASE_URL}uploads/${order.thumbnailImageUrl}`
                                 : '/cakeImage/default-cake.png'}
                                  alt={order.cname}
                                  className="w-full h-full object-cover rounded-full"/>

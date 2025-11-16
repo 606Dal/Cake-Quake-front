@@ -68,7 +68,7 @@ export default function CartItem({
             <div className="flex-shrink-0 w-20 h-20 mr-4">
                 {thumbnailImageUrl && (
                     <img
-                        src={thumbnailImageUrl ? `${S3_BASE_URL}${thumbnailImageUrl}` : '/cakeImage/default-cake.png'}
+                        src={thumbnailImageUrl ? `${S3_BASE_URL}uploads/${thumbnailImageUrl}` : '/cakeImage/default-cake.png'}
                         alt={cname}
                         className="w-full h-full object-cover rounded"
                     />

@@ -26,8 +26,6 @@ export default function MyReviewsPage() {
             setLoading(true);
             try {
                 const data = await getMyReviewList({ page, size: 10 });
-                console.log("백엔드 응답 전체:", data);
-                // 아래 항목명은 로그를 보고 실제 필드명에 맞춰 조정하세요
                 const items = data.items || data.content || data.dtoList || [];
                 setReviews(prev => page === 1 ? items : [...prev, ...items]);
                 setHasNext(data.hasNext);

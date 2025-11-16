@@ -222,7 +222,7 @@ const ChatListModal = ({ isOpen, onClose, positionStyles = {} }) => {
                                     onClick={() => handleShopClick(shop)}
                                 >
                                     <img
-                                        src={shop.thumbnailUrl ? `${S3_BASE_URL}${shop.thumbnailUrl}` : 'https://placehold.co/60x60/black/white?text=Shop'}
+                                        src={shop.thumbnailUrl ? `${S3_BASE_URL}uploads/${shop.thumbnailUrl}` : 'https://placehold.co/60x60/black/white?text=Shop'}
                                         alt={shop.shopName}
                                         className="w-12 h-12 object-cover rounded-md mr-3"
                                     />

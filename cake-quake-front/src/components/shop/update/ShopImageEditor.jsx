@@ -11,6 +11,7 @@ const ShopImageEditor = ({
                              setThumbnailIndex, // 썸네일 인덱스를 업데이트하는 함수
                          }) => {
     const inputRef = useRef(null); // 파일 입력 참조
+    const fileInputRef = useRef(null)
     const scrollRef = useRef(null); // 이미지 갤러리 스크롤 참조
 
     // 사용자에게 보여줄 이미지 삭제 확인 모달 관련 상태
@@ -22,20 +23,42 @@ const ShopImageEditor = ({
 
     // images나 thumbnailIndex가 변경될 때 메인 이미지 업데이트
     useEffect(() => {
-        if (images && images.length > 0) {
-            const thumbnail = images.find(img => img.isThumbnail);
-            // 썸네일이 있으면 썸네일 URL, 없으면 첫 번째 이미지 URL을 메인 이미지로 설정
-            const selectedMainImageUrl = thumbnail ? `${BASE_URL}${thumbnail.shopImageUrl}` : `${BASE_URL}${images[0].shopImageUrl}`;
-            setMainImage(selectedMainImageUrl);
-        } else {
-            setMainImage(null);
+        if (!Array.isArray(images) || images.length === 0) {
+            setMainImage(null)
+            return
         }
-    }, [images, thumbnailIndex]); // images와 thumbnailIndex 변경을 모두 감지
+
+        const thumbnail = images.find(img => img.isThumbnail)
+
+        if (thumbnail) {
+            if (thumbnail.isNew && thumbnail.file) {
+                setMainImage(URL.createObjectURL(thumbnail.file))
+            } else {
+                // 썸네일로 지정된 원본의 '원본 이미지'를 메인으로 보여주기
+                setMainImage(`${BASE_URL}uploads/${thumbnail.shopImageUrl}`)
+            }
+        } else {
+            const first = images[0]
+            if (first.isNew && first.file) {
+                setMainImage(URL.createObjectURL(first.file))
+            } else {
+                setMainImage(`${BASE_URL}uploads/${first.shopImageUrl}`)
+            }
+        }
+    }, [images, thumbnailIndex])
 
     // 메인 이미지를 클릭하면 그 이미지를 메인으로 설정
-    const handleMainImageClick = (imageUrl) => {
-        setMainImage(`${BASE_URL}${imageUrl}`);
-    };
+    const handleMainImageClick = (img) => {
+        if (!img) return
+
+        if (img.isNew && img.file) {
+            // 로컬 미리보기
+            const preview = URL.createObjectURL(img.file)
+            setMainImage(preview)
+        } else {
+            setMainImage(`${BASE_URL}uploads/${img.shopImageUrl}`)
+        }
+    }
 
     // 새 파일 추가 또는 기존 파일 변경 시 호출 (CakeImageUploadForm의 handleChange와 유사)
     const handleFileAddOrChange = (e, targetIndex = null) => {
@@ -105,7 +128,7 @@ const ShopImageEditor = ({
             const imageUrl = images[index].isNew && images[index].file
                 ? URL.createObjectURL(images[index].file)
                 : images[index].shopImageUrl;
-            setMainImage(`${BASE_URL}${imageUrl}`);
+            setMainImage(`${BASE_URL}uploads/${imageUrl}`);
         }
     };
 
@@ -148,17 +171,22 @@ const ShopImageEditor = ({
         // 메인 이미지 조정
         if (finalImages.length === 0) {
             setMainImage(null);
-        } else if (deleteTargetIndex === thumbnailIndex || mainImage === `${BASE_URL}${images[deleteTargetIndex]?.shopImageUrl}`) {
+        } else if (deleteTargetIndex === thumbnailIndex || mainImage === `${BASE_URL}uploads/${images[deleteTargetIndex]?.shopImageUrl}`) {
             // 삭제된 이미지가 메인 이미지였거나 썸네일이었다면, 새로운 썸네일 또는 첫 번째 이미지를 메인으로 설정
             const newMainImageObj = finalImages[newThumbnailIndex !== null ? newThumbnailIndex : 0];
             const src = newMainImageObj?.isNew && newMainImageObj?.file
                 ? URL.createObjectURL(newMainImageObj.file)
                 : newMainImageObj?.shopImageUrl;
-            setMainImage(`${BASE_URL}${src}`);
+            setMainImage(`${BASE_URL}uploads/${src}`);
         }
 
         setDeleteTargetIndex(null);
         setIsConfirmOpen(false);
+
+        // 파일 input 초기화 추가
+        if (inputRef.current) {
+            inputRef.current.value = null
+        }
     };
 
     // 이미지 삭제 취소 처리
@@ -198,18 +226,55 @@ const ShopImageEditor = ({
             >
                 {images.map((img, i) => {
                     // 기존 이미지인 경우 img.shopImageUrl을 직접 사용하고, 새 파일인 경우 URL.createObjectURL 사용
-                    const src = img.isNew && img.file ? URL.createObjectURL(img.file) : img.shopImageUrl;
-                    const fullUrl = `${BASE_URL}${src}`; // BASE_URL을 여기에 적용
+                    const src = img.isNew && img.file 
+                        ? URL.createObjectURL(img.file) 
+                        : `s_${img.shopImageUrl}`
+
+                    const fullUrl = img.isNew && img.file
+                        ? src
+                        : `${BASE_URL}uploads/${src}`
 
                     return (
-                        <div key={img.shopImageId || `new-${i}`} className="relative w-28 h-28 flex-shrink-0">
-                            <img
-                                src={fullUrl} // BASE_URL이 적용된 URL 사용
-                                alt={`Shop Image ${i + 1}`}
-                                onClick={() => handleMainImageClick(src)} // 클릭 시 메인 이미지 변경
-                                className={`w-full h-24 object-cover rounded-lg border-2 cursor-pointer transition-all duration-200 ease-in-out
-                                    ${mainImage === fullUrl ? "border-blue-500 scale-105 shadow-lg" : "border-gray-300 hover:border-gray-400"}`}
-                            />
+                        <div 
+                            key={img.shopImageId || `new-${i}`} 
+                            className="relative w-28 h-28 flex-shrink-0"
+                        >
+                            <div className="relative w-full h-24">
+                                <img
+                                    src={fullUrl} // BASE_URL이 적용된 URL 사용
+                                    alt={`Shop Image ${i + 1}`}
+                                    onClick={() => handleMainImageClick(img)} // 클릭 시 메인 이미지 변경
+                                    className={`w-full h-24 object-cover rounded-lg border-2 cursor-pointer transition-all duration-200 ease-in-out
+                                        ${mainImage === fullUrl ? "border-blue-500 scale-105 shadow-lg" : "border-gray-300 hover:border-gray-400"}`}
+                                />
+
+                                {/* 삭제 버튼 */}
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        e.stopPropagation()
+                                        handleDeleteClick(i)
+                                    }}
+                                    className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-opacity-80"
+                                    title="삭제"
+                                >
+                                    ×
+                                </button>
+
+                                {/* 교체 버튼 별도로 */}
+                                <label
+                                    className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 text-white text-xs text-center py-1 cursor-pointer opacity-0 group-hover:opacity-100 transition"
+                                >
+                                    교체
+                                    <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => handleFileAddOrChange(e, i)}
+                                    className="hidden"
+                                    />
+                                </label>
+                            </div>
+                            {/* 썸네일 선택 */}
                             <div className="text-center mt-1">
                                 <input
                                     type="radio"
@@ -220,43 +285,24 @@ const ShopImageEditor = ({
                                 />
                                 <span className="ml-1 text-sm text-gray-700">썸네일</span>
                             </div>
-                            <button
-                                onClick={() => handleDeleteClick(i)}
-                                className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-opacity-80"
-                                title="삭제"
-                            >
-                                ×
-                            </button>
-                            {/* 기존 파일 입력 필드를 각 이미지에 연결 (이미지 교체 기능) */}
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => handleFileAddOrChange(e, i)} // 특정 이미지 인덱스를 전달하여 교체
-                                className="absolute inset-0 opacity-0 cursor-pointer"
-                                title="이미지 교체"
-                            />
                         </div>
                     );
                 })}
 
-                <div className="flex-shrink-0 flex items-center justify-center w-28 h-28">
-                    <input
-                        type="file"
-                        accept="image/*"
-                        multiple // 여러 파일 선택 가능
-                        onChange={handleFileAddOrChange} // 새 파일 추가 로직
-                        className="hidden"
-                        id="imageUploadInput"
-                        ref={inputRef}
-                    />
-                    <label
-                        htmlFor="imageUploadInput"
-                        className="cursor-pointer bg-gray-100 px-6 py-12 rounded-md text-sm text-gray-600 hover:bg-gray-200 transition text-center whitespace-nowrap block w-full h-full flex items-center justify-center"
-                        onClick={handleAddImageClick} // 레이블 클릭 시 input 클릭
-                    >
-                        <Upload size={24} className="mr-2" />
-                        이미지 추가
-                    </label>
+                {/* 이미지 추가용 빈 슬롯 */}
+                <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-28 h-28 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-400"
+                >
+                <span className="text-gray-400 text-3xl">+</span>
+                <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleFileAddOrChange}
+                    className="hidden"
+                />
                 </div>
             </div>
 

@@ -6,20 +6,20 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 /** 잔액 조회 */
 export const getPointBalance = async () => {
-    console.log("📡 getPointBalance 요청");
+    // console.log("📡 getPointBalance 요청");
     const { data } = await jwtAxios.get(`${baseUrl}/points/balance`);
-    console.log("📥 getPointBalance 응답:", data);
+    // console.log("📥 getPointBalance 응답:", data);
     // 서버에서 { uid, currentBalance } 로 내려옵니다
     return data.currentBalance;
 };
 
 /** 히스토리 조회 */
 export const getPointHistory = async ({ page = 1, size = 10 }) => {
-    console.log(`📡 getPointHistory 요청 (page=${page}, size=${size})`);
+    // console.log(`📡 getPointHistory 요청 (page=${page}, size=${size})`);
     const { data } = await jwtAxios.get(`${baseUrl}/points/history`, {
         params: { page, size },
     });
-    console.log("📥 getPointHistory 응답:", data.content, "hasNext:", data.hasNext);
+    // console.log("📥 getPointHistory 응답:", data.content, "hasNext:", data.hasNext);
     return {
         items: data.content,
         hasNext: data.hasNext,

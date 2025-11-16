@@ -28,7 +28,6 @@ const BuyerProfileDetailsAlarmPage = () => {
     const { data: buyerData, isLoading, isError, error } = useQuery({
         queryKey: ['buyerProfile'],
         queryFn: async () => {
-            console.log("---------------query run 판매자 마이페이지 조회-------------------")
             const res = await getBuyerProfile()
             return res.data
         },
@@ -65,7 +64,6 @@ const BuyerProfileDetailsAlarmPage = () => {
         e.preventDefault()
         setErrorMessage("")
 
-        // console.log(form)
         try {
             setButtonLoading(true)
             
