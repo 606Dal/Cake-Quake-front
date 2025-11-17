@@ -8,10 +8,20 @@ export async function resizeImageUtile(file) {
   }
 
   try {
-    const compressedFile = await imageCompression(file, options)
+    const compressedBlob = await imageCompression(file, options)
+
+    // 원본 파일명 유지
+    const compressedFile = new File(
+      [compressedBlob],
+      file.name,
+      { type: file.type }
+    )
+    console.log("파일명 유지 확인: ", compressedFile)
+
     return compressedFile
+    
   } catch (err) {
     console.error("Image resize error:", err)
-    return file; // 실패하면 원본 파일 그대로
+    return file // 실패하면 원본 파일 그대로
   }
 }
