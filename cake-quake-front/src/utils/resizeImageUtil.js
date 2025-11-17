@@ -3,7 +3,7 @@ import imageCompression from 'browser-image-compression';
 export async function resizeImageUtile(file) {
   const options = {
     maxSizeMB: 2,                // 압축해서 2MB 이하로
-    maxWidthOrHeight: 2000,      // 최대 해상도 제한
+    maxWidthOrHeight: 1500,      // 최대 해상도 제한
     useWebWorker: true           // 브라우저 백그라운드 처리
   }
 

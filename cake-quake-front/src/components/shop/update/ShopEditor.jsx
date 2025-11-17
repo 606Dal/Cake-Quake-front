@@ -97,10 +97,26 @@ const ShopEditor = ({ shopId }) => {
             .filter(img => img.isNew && img.file)
             .map(img => img.file);
 
+        function getImageDimensions(file) {
+            return new Promise(resolve => {
+                const img = new Image()
+                img.onload = () => {
+                    resolve({ width: img.width, height: img.height })
+                }
+                img.src = URL.createObjectURL(file)
+            })
+        }
         // 프론트에서 먼저 리사이징 (OOM 방지)
         const resizedFiles = []
         for (const file of filesToUpload) {
+            const originalDim = await getImageDimensions(file)
+            console.log(`[원본] ${file.name} - size: ${(file.size / 1024 / 1024).toFixed(2)}MB, [해상도] ${originalDim.width} x ${originalDim.height}`)
+
             const resized = await resizeImageUtile(file)
+
+            const resizedDim = await getImageDimensions(resized)
+            console.log(`[리사이즈 후] ${resized.name} - size: ${(resized.size / 1024 / 1024).toFixed(2)}MB, [해상도] ${resizedDim.width} x ${resizedDim.height}`)
+
             resizedFiles.push(resized)
         }
 
