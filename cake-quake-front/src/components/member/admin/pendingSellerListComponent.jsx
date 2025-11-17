@@ -217,7 +217,7 @@ const PendingSellerListComponent = ({
                                                 >
                                                     <option value="" disabled>파일 보기</option>
                                                     <option value="business">사업자 등록증</option>
-                                                    {/* 매장 대표 이미지 - PENDING이면 비활성화 */}
+                                                    {/* 매장 대표 이미지 - APPROVED면 비활성화 */}
                                                     <option
                                                         value="shop"
                                                         disabled={pending.status === 'APPROVED'}
@@ -226,7 +226,7 @@ const PendingSellerListComponent = ({
                                                         매장 대표 이미지
                                                     </option>
 
-                                                    {/* 위생 인증서 - PENDING이면 비활성화 */}
+                                                    {/* 위생 인증서 - APPROVED면 비활성화 */}
                                                     <option
                                                         value="sanitation"
                                                         disabled={pending.status === 'APPROVED'}

@@ -5,6 +5,7 @@ import { getShopDetail, updateShop } from '../../../api/shopApi.jsx';
 import ShopImageGallery from "../read/ShopImageGallery.jsx";
 import AlertModal from "../../common/AlertModal.jsx";
 import { useNavigate } from "react-router";
+import { resizeImageUtile } from '../../../utils/resizeImageUtil.js';
 
 const ShopEditor = ({ shopId }) => {
     // 매장 기본 정보 및 기존 이미지 URL을 관리하는 상태
@@ -79,7 +80,7 @@ const ShopEditor = ({ shopId }) => {
     };
 
     const handleSubmit = async () => {
-        // 1. DTO 데이터를 준비 (form 상태와 editorImages 상태에서 가져옴)
+        // DTO 데이터를 준비 (form 상태와 editorImages 상태에서 가져옴)
         const dtoImageUrls = editorImages
             .map((img) => {
                 return {
@@ -92,9 +93,19 @@ const ShopEditor = ({ shopId }) => {
             });
 
         // 새로 추가된 파일들만 추출 (isNew 플래그가 true이고 file 객체가 있는 경우)
-        const filesToUpload = editorImages
+        let filesToUpload = editorImages
             .filter(img => img.isNew && img.file)
             .map(img => img.file);
+
+        // 프론트에서 먼저 리사이징 (OOM 방지)
+        const resizedFiles = []
+        for (const file of filesToUpload) {
+            const resized = await resizeImageUtile(file)
+            resizedFiles.push(resized)
+        }
+
+        // 파일 배열 교체
+        filesToUpload = resizedFiles
 
         // ShopUpdateDTO 최종 구성
         const shopUpdateDTO = {
