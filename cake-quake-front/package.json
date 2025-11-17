@@ -16,6 +16,7 @@
     "@tanstack/react-query-devtools": "^5.79.0",
     "@tosspayments/payment-sdk": "^1.9.1",
     "axios": "^1.9.0",
+    "browser-image-compression": "^2.0.2",
     "chart.js": "^4.5.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.18.1",
