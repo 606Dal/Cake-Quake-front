@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ShopInfoForm from './ShopInfoForm';
 import ShopImageEditor from './ShopImageEditor';
 import { getShopDetail, updateShop } from '../../../api/shopApi.jsx';
-import ShopImageGallery from "../read/ShopImageGallery.jsx";
 import AlertModal from "../../common/AlertModal.jsx";
 import { useNavigate } from "react-router";
 import { resizeImageUtile } from '../../../utils/resizeImageUtil.js';
@@ -80,42 +79,38 @@ const ShopEditor = ({ shopId }) => {
     };
 
     const handleSubmit = async () => {
+        // 새 이미지들만 따로 인덱싱
+        let newImageFileIndex = 0
+
         // DTO 데이터를 준비 (form 상태와 editorImages 상태에서 가져옴)
-        const dtoImageUrls = editorImages
-            .map((img) => {
-                return {
-                    shopImageId: img.shopImageId || null, // 새로 추가된 경우 null
-                    // 새로운 파일의 경우 img.shopImageUrl은 임시 URL(base64)이므로, 백엔드에서는 무시
-                    // 기존 이미지의 경우 유효한 URL
-                    shopImageUrl: img.shopImageUrl,
-                    isThumbnail: img.isThumbnail, // 가장 중요한 정보!
-                };
-            });
+        const dtoImageUrls = editorImages.map((img) => {
+            const dto = {
+                shopImageId: img.shopImageId ?? null,
+                shopImageUrl: img.shopImageUrl,
+                isThumbnail: img.isThumbnail,
+                isNew: img.isNew ?? false,
+                orderIndex: null
+            }
+
+            // 새 이미지라면 orderIndex를 filesToUpload의 index와 매칭
+            if (img.isNew && img.file) {
+                dto.orderIndex = newImageFileIndex
+                newImageFileIndex++
+            }
+
+            return dto
+        })
 
         // 새로 추가된 파일들만 추출 (isNew 플래그가 true이고 file 객체가 있는 경우)
         let filesToUpload = editorImages
             .filter(img => img.isNew && img.file)
             .map(img => img.file);
 
-        function getImageDimensions(file) {
-            return new Promise(resolve => {
-                const img = new Image()
-                img.onload = () => {
-                    resolve({ width: img.width, height: img.height })
-                }
-                img.src = URL.createObjectURL(file)
-            })
-        }
         // 프론트에서 먼저 리사이징 (OOM 방지)
         const resizedFiles = []
         for (const file of filesToUpload) {
-            const originalDim = await getImageDimensions(file)
-            console.log(`[원본] ${file.name} - size: ${(file.size / 1024 / 1024).toFixed(2)}MB, [해상도] ${originalDim.width} x ${originalDim.height}`)
 
             const resized = await resizeImageUtile(file)
-
-            const resizedDim = await getImageDimensions(resized)
-            console.log(`[리사이즈 후] ${resized.name} - size: ${(resized.size / 1024 / 1024).toFixed(2)}MB, [해상도] ${resizedDim.width} x ${resizedDim.height}`)
 
             resizedFiles.push(resized)
         }
@@ -145,7 +140,7 @@ const ShopEditor = ({ shopId }) => {
                 imageUrls: updatedData.imageUrls || []
             });
             setEditorImages(updatedData.images || []);
-            const updatedThumbnail = (updatedData.imageUrls || []).findIndex(img => img.isThumbnail);
+            const updatedThumbnail = (updatedData.images || []).findIndex(img => img.isThumbnail);
             setEditorThumbnailIndex(updatedThumbnail !== -1 ? updatedThumbnail : null);
 
             // 화면을 맨 위로 스크롤

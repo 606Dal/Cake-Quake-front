@@ -21,7 +21,7 @@ const ShopImageGallery = ({ images }) => {
     return (
         <div className="mb-5">
             {mainImage && (
-                <div className="w-full max-h-[450px] md:max-h-[500px] overflow-hidden mb-4 rounded-lg shadow-md bg-gray-200 flex items-center justify-center">
+                <div className="w-full max-h-[900px] md:max-h-[900px] overflow-hidden mb-4 rounded-lg shadow-md bg-gray-200 flex items-center justify-center">
                     <img
                         src={mainImage}
                         alt="Main Shop View"
