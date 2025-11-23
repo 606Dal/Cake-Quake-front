@@ -50,7 +50,7 @@ export default function ReviewForm({ product, points,  temperatureIncrement, val
                 {/* 상품 카드 */}
                 <div className="border border-gray-200 rounded-lg p-4 space-y-2">
                     <div className="flex items-center space-x-4">
-                        <img src={product.imageUrl ? `${S3_BASE_URL}reviewuploads/${product.imageUrl}` : '/cakeImage/default-cake.png'}
+                        <img src={product.imageUrl ? `${S3_BASE_URL}uploads/${product.imageUrl}` : '/cakeImage/default-cake.png'}
                              alt={product.name} className="w-12 h-12 rounded object-cover"/>
                         <div className="flex-1">
                             <p className="font-semibold">{product.name}</p>
