@@ -5,6 +5,7 @@ import { getShopDetail, updateShop } from '../../../api/shopApi.jsx';
 import AlertModal from "../../common/AlertModal.jsx";
 import { useNavigate } from "react-router";
 import { resizeImageUtile } from '../../../utils/resizeImageUtil.js';
+import ButtonSpinner from '../../common/buttonSpinner.jsx';
 
 const ShopEditor = ({ shopId }) => {
     // 매장 기본 정보 및 기존 이미지 URL을 관리하는 상태
@@ -31,6 +32,8 @@ const ShopEditor = ({ shopId }) => {
     const [showError, setShowError] = useState(false);
 
     const navigate = useNavigate()
+
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         if (showError) {
@@ -102,21 +105,9 @@ const ShopEditor = ({ shopId }) => {
         })
 
         // 새로 추가된 파일들만 추출 (isNew 플래그가 true이고 file 객체가 있는 경우)
-        let filesToUpload = editorImages
+        const filesToUpload = editorImages
             .filter(img => img.isNew && img.file)
             .map(img => img.file);
-
-        // 프론트에서 먼저 리사이징 (OOM 방지)
-        const resizedFiles = []
-        for (const file of filesToUpload) {
-
-            const resized = await resizeImageUtile(file)
-
-            resizedFiles.push(resized)
-        }
-
-        // 파일 배열 교체
-        filesToUpload = resizedFiles
 
         // ShopUpdateDTO 최종 구성
         const shopUpdateDTO = {
@@ -125,6 +116,8 @@ const ShopEditor = ({ shopId }) => {
         };
 
         try {
+            setIsLoading(true)
+
             await updateShop(shopId, {
                 dto: shopUpdateDTO,
                 files: filesToUpload,
@@ -154,6 +147,8 @@ const ShopEditor = ({ shopId }) => {
                 setFormError({message: '매장 정보 수정 중 알 수 없는 오류가 발생했습니다.', type: 'error'});
                 setShowError(true);
             }
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -187,9 +182,9 @@ const ShopEditor = ({ shopId }) => {
                 {/* 매장 정보 저장 버튼 */}
                 <button
                     onClick={handleSubmit}
-                    className="min-w-[160px] bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200"
+                    className="min-w-[160px] bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200 flex justify-center"
                 >
-                    매장 정보 저장
+                    {isLoading ? <ButtonSpinner /> : "매장 정보 저장"}
                 </button>
 
                 {/* 매장 관리로 이동 버튼 */}

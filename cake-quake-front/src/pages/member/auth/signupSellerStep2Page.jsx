@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import ResultModal from "../../../components/common/resultModal";
 import SignupSellerStep2Component from "../../../components/member/auth/signupSellerStep2Component";
 import PostcodePopup from "../../../components/common/postcodePopup";
 import { postSellerSignupStep2 } from "../../../api/authApi";
+import { getImageDimensions, resizeImageUtile } from "../../../utils/resizeImageUtil";
+import OKModal from "../../../components/common/OKModal";
 
 
 const SignupSellersStep2Page = () => {
@@ -36,11 +38,16 @@ const SignupSellersStep2Page = () => {
 
     const [previewUrl, setPreviewUrl] = useState(null)
 
+    const shopImageRef = useRef(null)
+
+    const [confirmOpen, setConfirmOpen] = useState(false)
+    const [confirmMsg, setConfirmMsg] = useState("")
+    const confirmResolveRef = useRef(null)
+
     useEffect(() => {
         const tempSellerId = sessionStorage.getItem("tempSellerId")
 
         if (!tempSellerId) {
-            // alert("1단계 정보가 없습니다. 처음부터 다시 진행해 주세요.")
             setModalMsg("1단계 정보가 없습니다. 처음부터 다시 진행해 주세요.")
             setModalType("SellerIdNotFound")
             setShowModal(true)
@@ -48,7 +55,7 @@ const SignupSellersStep2Page = () => {
         }else {
             setTempSellerId(tempSellerId)
         }
-    }, []);
+    }, [])
 
     const closeResultModal = () => {
         setShowModal(false)
@@ -63,7 +70,7 @@ const SignupSellersStep2Page = () => {
             navigate("/auth/signin")
         }
         
-        setModalType(null); // 상태 초기화
+        setModalType(null) // 상태 초기화
     }
 
     const handleChange = (e) => {
@@ -76,11 +83,67 @@ const SignupSellersStep2Page = () => {
         }))
     }
 
-    const handleFileChange = (e) => {
+    // 해상도 변경 확인 모달
+    const openConfirm = (message) => {
+        setConfirmMsg(message)
+        setConfirmOpen(true)
+
+        return new Promise((resolve) => {
+            confirmResolveRef.current = resolve
+        })
+    }
+
+    const handleConfirm = () => {
+        confirmResolveRef.current(true)
+        setConfirmOpen(false)
+    }
+
+    const handleCancel = () => {
+        confirmResolveRef.current(false)
+        setConfirmOpen(false)
+    }
+
+    const handleFileChange = async (e) => {
         const file = e.target.files[0]
         const name = e.target.name
 
         if (!file) return
+
+        // shopImage는 파일 크기와 해상도 확인 후 진행. 나중에 썸네일 생성 시 크기 제한 필요.
+        if (name === "shopImage") {
+            try {
+                // 리사이즈 조건 확인
+                const { file: resizedFile, resized } = await resizeImageUtile(file)
+
+                if (resized) {
+                    const proceed = await openConfirm(
+                        `이미지 해상도와 용량이 커서 낮게 조정합니다.\n계속 진행하시겠습니까?`
+                    )
+
+                    if (!proceed) {
+                        // 사용자가 취소한 경우 → 세팅하지 않음
+                        shopImageRef.current.value = "";
+                        return
+                    }
+
+                    const finalFile = resized ? resizedFile : file
+
+                    // 미리보기 업데이트
+                    const url = URL.createObjectURL(finalFile)
+                    setPreviewUrl(url)
+
+                    // Form에 리사이즈된 파일 세팅
+                    setForm((prev) => ({
+                        ...prev,
+                        [name]: finalFile,
+                    }))
+
+                    return
+                } // end if
+            } catch (error) {
+                console.error("이미지 검사/리사이즈 실패:", error)
+            }
+        } // end if
 
         // 첨부한 이미지 미리보기용
         const url = URL.createObjectURL(file)
@@ -145,10 +208,6 @@ const SignupSellersStep2Page = () => {
 
         try {
             setIsLoading(true)
-            // console.log("FormData 내부 확인:")
-            // formData.forEach((value, key) => {
-            //     console.log(`${key}:`, value)
-            // })
             const res = await postSellerSignupStep2(formData)
 
             // 회원가입 성공 시 모달 표시
@@ -160,7 +219,7 @@ const SignupSellersStep2Page = () => {
             setErrorMessage(msg)
             console.error("회원 가입 실패", err)
         } finally{
-            setIsLoading(false) // 성공/실패 관계없이 로딩 종료
+            setIsLoading(false)
         }
     }
     
@@ -175,7 +234,7 @@ const SignupSellersStep2Page = () => {
                 handleSubmit={handleSubmit}
                 errorMessage={errorMessage}
                 previewUrl={previewUrl}
-                AddressPopupButton={ // 다음 주소 검색 서비스의 버튼 넘기기
+                AddressPopupButton={ // 다음(daum) 주소 검색 서비스의 버튼 넘기기
                     <PostcodePopup
                         onComplete={(address) =>
                             setForm((prev) => ({
@@ -186,6 +245,13 @@ const SignupSellersStep2Page = () => {
                         }
                     />
                 }
+                shopImageRef={shopImageRef}
+            />
+            <OKModal
+                show={confirmOpen}
+                message={confirmMsg}
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
             />
             <ResultModal show={showModal} closeResultModal={closeResultModal} msg={modalMsg} />
         </>

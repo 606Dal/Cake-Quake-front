@@ -225,15 +225,7 @@ const PendingSellerListComponent = ({
                                                     >
                                                         매장 대표 이미지
                                                     </option>
-
-                                                    {/* 위생 인증서 - APPROVED면 비활성화 */}
-                                                    <option
-                                                        value="sanitation"
-                                                        disabled={pending.status === 'APPROVED'}
-                                                        className={pending.status === 'APPROVED' ? "text-gray-400" : ""}
-                                                    >
-                                                        위생 인증서
-                                                    </option>
+                                                    <option value="sanitation">위생 인증서</option>
                                                 </select>
                                             </div>
                                         </td>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CakeBasicInfoForm from "../../../components/cake/itemComponents/cakeBasicInfoForm.jsx";
 import CakeImageUploadForm from "../../../components/cake/itemComponents/cakeImageForm.jsx";
 import CakeOptionForm from "../../../components/cake/itemComponents/cakeOptionForm.jsx";
@@ -6,6 +6,9 @@ import { getOptionTypes, getOptionItems, addCake } from "../../../api/cakeApi.js
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../../store/AuthContext.jsx";
 import AlertModal from "../../../components/common/AlertModal";
+import { resizeImageUtile } from "../../../utils/resizeImageUtil.js";
+import OKModal from "../../../components/common/OKModal.jsx";
+import ButtonSpinner from "../../../components/common/buttonSpinner.jsx";
 
 function CakeAddPage() {
     const { user } = useAuth();
@@ -26,15 +29,60 @@ function CakeAddPage() {
     const [formError, setFormError] = useState(null);
     const [showError, setShowError] = useState(false);
 
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [confirmOpen, setConfirmOpen] = useState(false)
+    const [confirmMsg, setConfirmMsg] = useState('')
+    const confirmResolveRef = useRef(null)
+
+    const openConfirm = (message) => {
+        setConfirmMsg(message)
+        setConfirmOpen(true)
+        return new Promise((resolve) => {
+            confirmResolveRef.current = resolve
+        })
+    }
+
+    const handleConfirm = () => {
+        confirmResolveRef.current(true)
+        setConfirmOpen(false)
+    }
+
+    const handleCancel = () => {
+        confirmResolveRef.current(false)
+        setConfirmOpen(false)
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setAddCakeDTO((prev) => ({ ...prev, [name]: value }));
     };
 
     // 이미지 추가
-    const handleImageChange = (e) => {
-        const selectedFiles = Array.from(e.target.files);
-        const newFiles = selectedFiles.map((file) => ({
+    const handleImageChange = async (e) => {
+        const selectedFiles = Array.from(e.target.files)
+        let resultFiles = []
+
+        for (const file of selectedFiles) {
+            // 리사이즈 조건 확인
+            const { file: resizedFile, resized } = await resizeImageUtile(file)
+
+            if (resized) {
+                const proceed = await openConfirm(
+                        `이미지 해상도와 용량이 커서 낮게 조정합니다.\n계속 진행하시겠습니까?`
+                )
+
+                if (!proceed) {
+                    continue   // 파일 건너뛰기
+                }
+                resultFiles.push(resizedFile)
+            } else {
+                // 리사이즈 필요 X → 원본 사용
+                resultFiles.push(file)
+            }
+        } // end for
+
+        const newFiles = resultFiles.map((file) => ({
             file,
             src: URL.createObjectURL(file),
             isThumbnail: false,
@@ -129,6 +177,8 @@ function CakeAddPage() {
 
     const handleSubmit = async () => {
         try {
+            setIsLoading(true)
+
             const thumbnailImage = cakeImage.find(img => img.isThumbnail);
             const optionItemIds = selectedOptions.map(option => option.optionItemId);
 
@@ -171,6 +221,8 @@ function CakeAddPage() {
             const errorMessage = error.response?.data?.message || error.message || "알 수 없는 오류";
             setFormError({ message: `등록 중 오류 발생: ${errorMessage}`, type: "error" });
             setShowError(true);
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -194,6 +246,12 @@ function CakeAddPage() {
                 />
                 <CakeBasicInfoForm formData={addCakeDTO} onChange={handleChange} />
                 <CakeOptionForm optionTypes={optionTypes} selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions} />
+                <OKModal
+                    show={confirmOpen}
+                    message={confirmMsg}
+                    onConfirm={handleConfirm}
+                    onCancel={handleCancel}
+                />
                 <div className="mt-6 flex justify-center">
                     <Link
                         to={`/shops/${user.shopId}`}
@@ -205,7 +263,7 @@ function CakeAddPage() {
                         onClick={handleSubmit}
                         className="mt-6 ml-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-500"
                     >
-                        등록
+                        {isLoading ? <ButtonSpinner /> : "등록"}
                     </button>
                 </div>
             </div>

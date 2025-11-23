@@ -10,7 +10,7 @@ const ResultModal = ({ show, closeResultModal, msg }) => {
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-500 bg-clip-text text-transparent mb-4">
                     결과
                 </h2>
-                <p className="text-xl text-gray-600 mb-6">{msg}</p>
+                <p className="text-xl text-gray-600 mb-6 whitespace-pre-line">{msg}</p>
                 <button
                     onClick={closeResultModal}
                     className="px-6 py-2 text-white font-semibold rounded-lg shadow-md transition duration-300"

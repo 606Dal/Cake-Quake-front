@@ -9,7 +9,8 @@ const SignupSellerStep2Component = ({
     errorMessage,
     handleSubmit,
     previewUrl,
-    AddressPopupButton
+    AddressPopupButton,
+    shopImageRef
 }) => {
 
     const { shopPhoneNumber, openTime, closeTime, mainProductDescription } = form
@@ -44,6 +45,7 @@ const SignupSellerStep2Component = ({
                             accept="image/*"
                             onChange={handleFileChange}
                             className="w-full p-2 border rounded-lg"
+                            ref={shopImageRef}
                         />
                     </div>
 

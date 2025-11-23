@@ -2,7 +2,8 @@ const ConfirmationModal=({isOpen,message,onConfirm,onCancel})=>{
     if(!isOpen) return null; //모달이 열려있지 않은 경우 렌더링 X
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+            style={{ backgroundColor: 'rgba(169, 169, 169, 0.7)' }}>
             <div className="bg-white p-8 rounded-lg shadow-xl max-w-sm w-full mx-4">
                 <p className="text-lg font-semibold mb-6 text-center">{message}</p>
                 <div className="flex justify-center gap-4">

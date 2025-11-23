@@ -33,7 +33,7 @@ export default function ReviewDetail({
             {review.reviewPictureUrl && (
                 <div className="w-full flex justify-center mb-6">
                     <img
-                        src={review.reviewPictureUrl ? `${S3_BASE_URL}${review.reviewPictureUrl}` : '/cakeImage/default-cake.png'}
+                        src={review.reviewPictureUrl ? `${S3_BASE_URL}reviewuploads/${review.reviewPictureUrl}` : '/cakeImage/default-cake.png'}
                         alt={`리뷰 이미지 ${review.reviewId}`}
                         loading="lazy"
                         className="rounded object-contain max-w-full max-h-96"

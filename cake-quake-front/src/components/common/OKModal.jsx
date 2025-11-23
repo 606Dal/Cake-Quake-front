@@ -8,8 +8,8 @@ export default function OKModal({ show, message, onConfirm, onCancel }) {
             <div className="absolute inset-0 bg-black opacity-30" />
             {/* 모달 박스 */}
             <div className="bg-white rounded-lg p-6 shadow-lg z-10 w-80">
-                <p className="text-gray-800 mb-4">{message}</p>
-                <div className="flex justify-end space-x-2">
+                <p className="text-gray-800 mb-4 whitespace-pre-line">{message}</p>
+                <div className="flex justify-center space-x-2 gap-6">
                     <button
                         onClick={onCancel}
                         className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"

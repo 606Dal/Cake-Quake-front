@@ -1,6 +1,8 @@
 import {useState, useEffect, useRef} from 'react';
 import { Upload } from 'lucide-react';
 import ConfirmationModal from '../confirmationModal.jsx'; // 확인 모달 컴포넌트 임포트
+import { resizeImageUtile } from '../../../utils/resizeImageUtil.js';
+import OKModal from '../../common/OKModal.jsx';
 
 const BASE_URL = import.meta.env.VITE_S3_BASE_URL;
 
@@ -20,6 +22,28 @@ const ShopImageEditor = ({
 
     // 메인 이미지 상태 추가: ShopImageEditor 내부에서 관리
     const [mainImage, setMainImage] = useState(null);
+
+    const [confirmOpen, setConfirmOpen] = useState(false)
+    const [confirmMsg, setConfirmMsg] = useState('')
+    const confirmResolveRef = useRef(null)
+
+    const openConfirm = (message) => {
+        setConfirmMsg(message)
+        setConfirmOpen(true)
+        return new Promise((resolve) => {
+            confirmResolveRef.current = resolve
+        })
+    }
+
+    const handleConfirm = () => {
+        confirmResolveRef.current(true)
+        setConfirmOpen(false)
+    }
+
+    const handleCancel = () => {
+        confirmResolveRef.current(false)
+        setConfirmOpen(false)
+    }
 
     // images나 thumbnailIndex가 변경될 때 메인 이미지 업데이트
     useEffect(() => {
@@ -61,15 +85,32 @@ const ShopImageEditor = ({
     }
 
     // 새 파일 추가 또는 기존 파일 변경 시 호출 (CakeImageUploadForm의 handleChange와 유사)
-    const handleFileAddOrChange = (e, targetIndex = null) => {
+    const handleFileAddOrChange = async (e, targetIndex = null) => {
         const files = Array.from(e.target.files);
 
         if (files.length === 0) {
             return;
         }
 
+        const resultFiles = []
 
-        const newImagesToProcess = files.map(file => ({
+        for (const file of files) {
+            const { file: resizedFile, resized } = await resizeImageUtile(file)
+
+            if (resized) {
+                const proceed = await openConfirm(
+                    `이미지 해상도/용량이 기준보다 큽니다.\n낮은 해상도로 조정합니다.\n계속할까요?`
+                )
+
+                if (!proceed) continue
+
+                resultFiles.push(resizedFile)
+            } else {
+                resultFiles.push(file)
+            }
+        }
+
+        const newImagesToProcess = resultFiles.map(file => ({
             shopImageId: null, // 새로운 파일이므로 ID 없음
             shopImageUrl: '', // 초기 URL 비워두고 FileReader로 채움
             isThumbnail: false,
@@ -312,6 +353,12 @@ const ShopImageEditor = ({
                 message="정말 이 이미지를 삭제하시겠습니까? 저장하기 전까지는 반영되지 않습니다."
                 onConfirm={handleConfirmDelete}
                 onCancel={handleCancelDelete}
+            />
+            <OKModal
+                show={confirmOpen}
+                message={confirmMsg}
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
             />
         </div>
     );

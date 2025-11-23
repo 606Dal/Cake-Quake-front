@@ -1,9 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router";
 import UpdateCake from "../../../components/cake/itemComponents/updateCakeComponent.jsx";
 import {getCakeDetail, updateCake, getOptionTypes, getOptionItems} from "../../../api/cakeApi.jsx";
 import {useAuth} from "../../../store/AuthContext.jsx";
 import AlertModal from "../../../components/common/AlertModal.jsx";
+import { resizeImageUtile } from "../../../utils/resizeImageUtil.js";
+import OKModal from "../../../components/common/OKModal.jsx";
+import ButtonSpinner from "../../../components/common/buttonSpinner.jsx";
 
 function CakeUpdatePage() {
     const {user} = useAuth();
@@ -11,6 +14,8 @@ function CakeUpdatePage() {
     const navigate = useNavigate();
     const [formError, setFormError] = useState(null);
     const [showError, setShowError] = useState(false);
+
+    const [isLoading, setIsLoading] = useState(false)
 
     // 케이크 기본 정보
     const [updateDTO, setUpdateDTO] = useState({
@@ -27,6 +32,29 @@ function CakeUpdatePage() {
     // 옵션
     const [optionTypes, setOptionTypes] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
+
+    // 이미지 크기 조정 확인 창
+    const [confirmOpen, setConfirmOpen] = useState(false)
+    const [confirmMsg, setConfirmMsg] = useState('')
+    const confirmResolveRef = useRef(null)
+
+    const openConfirm = (message) => {
+        setConfirmMsg(message)
+        setConfirmOpen(true)
+        return new Promise((resolve) => {
+            confirmResolveRef.current = resolve
+        })
+    }
+
+    const handleConfirm = () => {
+        confirmResolveRef.current(true)
+        setConfirmOpen(false)
+    }
+
+    const handleCancel = () => {
+        confirmResolveRef.current(false)
+        setConfirmOpen(false)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -90,11 +118,30 @@ function CakeUpdatePage() {
         setUpdateDTO((prev) => ({...prev, [name]: value}));
     };
 
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        if (files.length === 0) return;
+    const handleImageChange = async (e) => {
+        const selectedFiles = Array.from(e.target.files);
+        if (selectedFiles.length === 0) return;
 
-        const newImageObjects = files.map(file => ({
+        let resultFiles = []
+
+        for (const file of selectedFiles) {
+            const { file: resizedFile, resized } = await resizeImageUtile(file)
+
+            if (resized) {
+                const proceed = await openConfirm(
+                        `이미지 해상도와 용량이 커서 낮게 조정합니다.\n계속 진행하시겠습니까?`
+                )
+
+                if (!proceed) {
+                    continue   // 파일 건너뛰기
+                }
+                resultFiles.push(resizedFile)
+            } else {
+                resultFiles.push(file)
+            }
+        } // end for
+
+        const newImageObjects = resultFiles.map(file => ({
             id: null,
             src: URL.createObjectURL(file),
             file: file,
@@ -135,6 +182,8 @@ function CakeUpdatePage() {
         e.preventDefault();
 
         try {
+            setIsLoading(true)
+
             const formData = new FormData();
 
             const updateCakeDTO = {
@@ -167,6 +216,8 @@ function CakeUpdatePage() {
             console.error("케이크 수정 실패:", error);
             setFormError({ message: "케이크 수정 중 오류가 발생했습니다.", type: "error" });
             setShowError(true);
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -200,6 +251,12 @@ function CakeUpdatePage() {
                         show={showError}
                     />
                 )}
+                <OKModal
+                    show={confirmOpen}
+                    message={confirmMsg}
+                    onConfirm={handleConfirm}
+                    onCancel={handleCancel}
+                />
                 <div className="flex justify-center mt-6">
                     <Link
                         to={`/shops/${user.shopId}/cakes/read/${cakeId}`}
@@ -211,7 +268,7 @@ function CakeUpdatePage() {
                         onClick={handleSubmit}
                         className="mt-6 ml-2 bg-black text-white px-4 py-2 rounded hover:bg-gray-500"
                     >
-                        저장
+                        {isLoading ? <ButtonSpinner /> : "저장"}
                     </button>
                 </div>
             </div>

@@ -23,7 +23,7 @@ function CakeImageUploadForm({ images, onImageChange, onImageRemove, onThumbnail
             <div
                 ref={scrollRef}
                 className="flex gap-5 overflow-x-auto max-w-full scrollbar-hide"
-                style={{ height: "120px", overflowY: "hidden" }}
+                style={{ height: "150px", overflowY: "hidden" }}
             >
                 {images.map((img, index) => {
                     return (
