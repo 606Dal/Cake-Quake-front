@@ -1,5 +1,12 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://frontend.api-cakequake.shop/$1",
+      "permanent": true
+    }
   ]
 }
