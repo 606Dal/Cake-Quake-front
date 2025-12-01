@@ -92,8 +92,7 @@
 
 ---
 ### 🔗 관련 링크, GitHub 레포지토리
-- 배포 도메인: https://cake-quake.vercel.app/  
-  ※ 로그인 시 **서드파티 쿠키 허용**이 필요합니다.
+- 배포 도메인: https://cake-quake.vercel.app/
 - Backend Repository: https://github.com/606Dal/Cake-Quake-back
 
 
@@ -110,3 +109,6 @@
 - 2025-11-16
   - 매장 정보 수정의 이미지 관련 기능 수정.
   - 인터페이스 부분 수정.
+
+- 2025-12-01
+  - 서드 파티 쿠키 관련 로그인 문제 해결.

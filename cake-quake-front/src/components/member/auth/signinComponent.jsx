@@ -62,10 +62,10 @@ const SigninComponent = ({
                     )}
                     
                     {/* 안내 문구 추가 */}
-                    <p className="text-xs text-rose-500 mt-2">
+                    {/* <p className="text-xs text-rose-500 mt-2">
                         ⚠️ 로그인이 정상적으로 되지 않는다면 브라우저에서
                         <span className="font-semibold"> 서드 파티 쿠키 사용을 허용</span>해주세요.
-                    </p>
+                    </p> */}
                     <div className="space-y-3 pt-2">
                         <button
                             type="submit"
