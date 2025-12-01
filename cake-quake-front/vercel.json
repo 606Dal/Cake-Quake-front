@@ -5,6 +5,9 @@
   "redirects": [
     {
       "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "cake-quake.vercel.app" }
+      ],
       "destination": "https://frontend.api-cakequake.shop/$1",
       "permanent": true
     }
