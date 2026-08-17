@@ -1,17 +1,17 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/:path*",
       "destination": "https://cakequake-api.shop/:path*"
     }
   ],
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [
         { "type": "host", "value": "cake-quake.vercel.app" }
       ],
-      "destination": "https://frontend.api-cakequake.shop/$1",
+      "destination": "https://frontend.api-cakequake.shop/:path*",
       "permanent": true
     }
   ]
