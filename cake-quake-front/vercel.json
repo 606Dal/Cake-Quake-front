@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://cakequake-api.shop/:path*"
+      "destination": "https://cakequake-api.shop/api/:path*"
     }
   ],
   "redirects": [
